@@ -7,31 +7,19 @@
 <link rel="icon" href="data:,">
 <style>
 :root{
-  /* === Couleurs Papothé (modifiable ici) === */
-  --bg:#faf7f4;
-  --card:#ffffff;
-  --ink:#0f2747;         /* Bleu Papothé (texte) */
-  --muted:#6b778a;
-  --brand:#d06a4e;       /* Terracotta Papothé */
-  --accent:#11335b;      /* Navy Papothé */
-  --success:#0f8a5f;
-  --danger:#c13515;
-  --shadow:0 6px 18px rgba(15,39,71,.08);
-  --radius:14px;
-
-  /* Couleurs par canal */
-  --col-site:#1f5fbf;
-  --col-pro:#d06a4e;     /* Pro/Revendeurs */
-  --col-salons:#0f8a5f;
+  /* Couleurs Papothé */
+  --bg:#faf7f4; --card:#ffffff; --ink:#0f2747; --muted:#6b778a;
+  --brand:#d06a4e; --accent:#11335b; --success:#0f8a5f; --danger:#c13515;
+  --shadow:0 6px 18px rgba(15,39,71,.08); --radius:14px;
+  /* Canaux */
+  --col-site:#1f5fbf; --col-pro:#d06a4e; --col-salons:#0f8a5f;
 }
-
-/* Reset & layout */
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto}
 body{background:var(--bg);color:var(--ink)}
 .topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#fff,#f6f2ec);border-bottom:1px solid #eee;box-shadow:var(--shadow)}
 .topbar-inner{max-width:1200px;margin:auto;display:flex;align-items:center;gap:16px;padding:10px 16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--accent);white-space:nowrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--accent)}
 .brand img{width:28px;height:28px;border-radius:6px;object-fit:contain;background:#fff}
 .nav{display:flex;gap:6px;flex-wrap:wrap}
 .nav-btn{border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--ink)}
@@ -39,16 +27,15 @@ body{background:var(--bg);color:var(--ink)}
 .period{margin-left:auto;display:flex;gap:8px;align-items:center;background:#fff;border-radius:10px;padding:6px 8px}
 .period select,.period input,.period button{border:1px solid #e5e5e5;border-radius:8px;padding:8px 10px}
 .period button{background:var(--brand);color:#fff;border:0;cursor:pointer}
-.period button:hover{filter:brightness(.95)}
-
 .container{max-width:1200px;margin:22px auto;padding:0 16px}
 .page{display:none}.page.visible{display:block}
 h1{margin:8px 0 16px}
 .kpis{display:grid;grid-template-columns:repeat(5,minmax(160px,1fr));gap:14px;margin-bottom:16px}
 .kpi{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow)}
-.kpi strong{font-size:22px}.kpi.success strong{color:var(--success)}.kpi.danger strong{color:var(--danger)}
-.kpi small{display:block;color:var(--muted);margin-top:6px}
+.kpi strong{font-size:22px}.kpi small{display:block;color:var(--muted);margin-top:6px}
+.kpi.success strong{color:var(--success)}.kpi.danger strong{color:var(--danger)}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
 .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow)}
 .card h3{margin:0 0 10px}
 .table{width:100%;border-collapse:collapse;font-size:14px}
@@ -56,37 +43,20 @@ h1{margin:8px 0 16px}
 .table thead th{color:var(--muted);font-weight:600}
 .badge{padding:4px 8px;border-radius:999px;font-size:12px}.badge.success{background:#e7f6ef;color:#0f8a5f}.badge.warn{background:#fff6e0;color:#9c6a05}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form label{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.form input,.form select{padding:10px;border:1px solid #e4e4e4;border-radius:8px}
-button.btn{border:0;background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer}
-button.btn:hover{filter:brightness(.95)}
-.score{margin-top:10px;padding:10px;background:#f5faf7;border:1px solid #d3efe3;border-radius:8px;color:var(--success);font-weight:700}
 .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:13px}
 .legend .item{display:flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px}
 .legend .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
-
 /* Responsive */
-@media (max-width:1100px){
-  .kpis{grid-template-columns:1fr 1fr}
-  .grid-2{grid-template-columns:1fr}
-  .period{margin-left:0}
-}
-@media (max-width:640px){
-  .nav{width:100%}
-  .period{width:100%;flex-wrap:wrap}
-  .kpis{grid-template-columns:1fr}
-}
+@media (max-width:1100px){ .kpis{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr} .period{margin-left:0}}
+@media (max-width:640px){ .nav{width:100%} .period{width:100%;flex-wrap:wrap} .kpis{grid-template-columns:1fr}}
 canvas.responsive{width:100%;height:auto;display:block}
 </style>
 </head>
 <body>
-
-<!-- Top bar -->
 <div class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <img src="https://papothe.fr/favicon.ico" alt="Papothé" onerror="this.style.display='none'">
-      <span>Papothé</span>
+      <img src="https://papothe.fr/favicon.ico" alt="Papothé" onerror="this.style.display='none'"><span>Papothé</span>
     </div>
     <div class="nav">
       <button class="nav-btn active" data-target="dashboard">Tableau de bord</button>
@@ -117,65 +87,65 @@ canvas.responsive{width:100%;height:auto;display:block}
 
 <div class="container">
 
-  <!-- Dashboard -->
+  <!-- DASHBOARD -->
   <section id="dashboard" class="page visible">
     <h1>Tableau de bord</h1>
     <div class="kpis">
       <div class="kpi"><div>CA TTC</div><strong id="kpi-cattt">—</strong></div>
       <div class="kpi"><div>CA HT</div><strong id="kpi-caht">—</strong></div>
       <div class="kpi"><div>Marge brute</div><strong id="kpi-marge">—</strong></div>
-      <div class="kpi"><div>TVA collectée</div>
-        <strong id="kpi-tva">—</strong>
-        <small id="kpi-tva-detail">—</small>
-      </div>
-      <div class="kpi" id="kpi-result-box"><div>Résultat net</div><strong id="kpi-result">—</strong></div>
+      <div class="kpi"><div>TVA collectée</div><strong id="kpi-tva-col">—</strong><small id="kpi-tva-col-detail">—</small></div>
+      <div class="kpi"><div>TVA récupérée</div><strong id="kpi-tva-ded">—</strong><small id="kpi-tva-ded-detail">—</small></div>
     </div>
+
     <div class="grid-2">
-      <div class="card">
-        <h3>CA quotidien (réel)</h3>
-        <canvas id="dashLine" class="responsive"></canvas>
-      </div>
-      <div class="card">
-        <h3>Projection de trésorerie (simple)</h3>
-        <canvas id="dashProj" class="responsive"></canvas>
-      </div>
+      <div class="card"><h3>CA quotidien (réel)</h3><canvas id="dashLine" class="responsive"></canvas></div>
+      <div class="card"><h3>Projection de trésorerie</h3><canvas id="dashProj" class="responsive"></canvas></div>
     </div>
+
     <div class="grid-2">
-      <div class="card">
-        <h3>Dépenses par type</h3>
-        <canvas id="dashPie" class="responsive"></canvas>
-        <div id="legend-expenses" class="legend"></div>
-      </div>
-      <div class="card">
-        <h3>Répartition du CA par canal</h3>
-        <canvas id="dashBar" class="responsive"></canvas>
-        <div id="legend-channels" class="legend"></div>
-      </div>
+      <div class="card"><h3>Dépenses par type</h3><canvas id="dashPie" class="responsive"></canvas><div id="legend-expenses" class="legend"></div></div>
+      <div class="card"><h3>Répartition du CA par canal</h3><canvas id="dashBar" class="responsive"></canvas><div id="legend-channels" class="legend"></div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card"><h3>Top 10 ventes</h3><ol id="top10"></ol></div>
+      <div class="card"><h3>Top 10 flops</h3><ol id="flop10"></ol></div>
     </div>
   </section>
 
-  <!-- Ventes -->
+  <!-- VENTES -->
   <section id="sales" class="page">
     <h1>Ventes</h1>
-    <div class="kpis">
-      <div class="kpi"><div>CA TTC</div><strong id="sales-cattt">—</strong></div>
-      <div class="kpi"><div>Commandes</div><strong id="sales-orders">—</strong></div>
-      <div class="kpi"><div>Panier moyen</div><strong id="sales-aov">—</strong></div>
-      <div class="kpi"><div>Taux de réachat (simulé)</div><strong id="sales-repeat">—</strong></div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>Récap CA TTC par type</h3>
+        <table class="table" id="salesRecapCA"></table>
+      </div>
+      <div class="card">
+        <h3>Commandes par type</h3>
+        <table class="table" id="salesRecapOrders"></table>
+      </div>
+      <div class="card">
+        <h3>CA par Collection</h3>
+        <canvas id="salesCollections" class="responsive"></canvas>
+      </div>
     </div>
+
     <div class="grid-2">
       <div class="card"><h3>Ventes quotidiennes</h3><canvas id="salesLine" class="responsive"></canvas></div>
       <div class="card"><h3>CA par mois</h3><canvas id="salesBar" class="responsive"></canvas></div>
     </div>
-    <div class="card"><h3>CA par Collection</h3><canvas id="salesCollections" class="responsive"></canvas></div>
+
     <div class="card">
-      <h3>Journal des ventes (échantillon)</h3>
+      <h3>Journal des ventes (Shopify + Salon/Zettle + Factures)</h3>
       <table id="salesTable" class="table"></table>
-      <button id="exportCsv" class="btn">⬇️ Exporter CSV (journal)</button>
+      <button id="exportCsv" class="btn">⬇️ Exporter CSV</button>
     </div>
   </section>
 
-  <!-- Produits -->
+  <!-- PRODUITS -->
   <section id="products" class="page">
     <h1>Produits</h1>
     <div class="kpis">
@@ -200,26 +170,26 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- Factures -->
+  <!-- FACTURES -->
   <section id="invoices" class="page">
     <h1>Factures</h1>
-    <div class="card">
-      <p>Charge ici tes factures PDF/Excel pour extraction (démo UI) :</p>
-      <input type="file" multiple/>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Importer</h3>
+        <input type="file" multiple/>
+      </div>
+      <div class="card">
+        <h3>Totaux par fournisseur (période)</h3>
+        <table class="table" id="invBySupplier"></table>
+      </div>
     </div>
     <div class="card">
       <h3>Exemples de factures</h3>
-      <table class="table">
-        <thead><tr><th>Date</th><th>Fournisseur</th><th>Montant HT</th><th>TVA</th><th>Catégorie</th><th>Statut</th></tr></thead>
-        <tbody>
-          <tr><td>2025-02-05</td><td>Thé Délices</td><td>1 250,00 €</td><td>5,5%</td><td>Stock</td><td><span class="badge success">Payée</span></td></tr>
-          <tr><td>2025-01-28</td><td>Imprint Vert</td><td>340,50 €</td><td>20%</td><td>Packaging</td><td><span class="badge warn">En attente</span></td></tr>
-        </tbody>
-      </table>
+      <table class="table" id="invTable"></table>
     </div>
   </section>
 
-  <!-- Projets -->
+  <!-- PROJETS -->
   <section id="projects" class="page">
     <h1>Projets & Scénarios</h1>
     <div class="grid-2">
@@ -244,7 +214,7 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- Benchmark -->
+  <!-- BENCHMARK -->
   <section id="benchmark" class="page">
     <h1>Benchmark Concurrence</h1>
     <div class="grid-2">
@@ -253,7 +223,7 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- Import manuel -->
+  <!-- IMPORT MANUEL -->
   <section id="imports" class="page">
     <h1>Import manuel</h1>
     <div class="card">
@@ -278,13 +248,14 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- Compte en Banque -->
+  <!-- COMPTE EN BANQUE -->
   <section id="bank" class="page">
     <h1>Compte en Banque</h1>
     <div class="kpis">
       <div class="kpi"><div>Solde (démo)</div><strong id="bank-balance">—</strong></div>
       <div class="kpi"><div>Entrées (période)</div><strong id="bank-in">—</strong></div>
       <div class="kpi"><div>Sorties (période)</div><strong id="bank-out">—</strong></div>
+      <div class="kpi" id="kpi-result-box"><div>Résultat net (approx)</div><strong id="kpi-result">—</strong></div>
     </div>
     <div class="card">
       <h3>Transactions</h3>
@@ -292,91 +263,100 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- Exports -->
+  <!-- EXPORTS -->
   <section id="exports" class="page">
     <h1>Exports</h1>
     <div class="card"><button id="exportAll" class="btn">⬇️ Télécharger les données (JSON)</button></div>
   </section>
-
 </div>
 
 <script>
-/* ====== Helpers & responsive canvas ====== */
+/* ===== Helpers & responsive canvas ===== */
 const DPR = window.devicePixelRatio || 1;
 const fmtEUR = n => n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 const byId = id => document.getElementById(id);
+function fitCanvas(c){const b=c.getBoundingClientRect(); c.width=Math.max(300,Math.floor(b.width*DPR)); c.height=Math.floor((b.width*0.45)*DPR); c.getContext('2d').setTransform(DPR,0,0,DPR,0,0);}
+function redraw(){document.querySelectorAll('canvas.responsive').forEach(fitCanvas);}
 
-function fitCanvas(c){ const box=c.getBoundingClientRect(); c.width=Math.max(300,Math.floor(box.width*DPR)); c.height=Math.floor((box.width*0.45)*DPR); const ctx=c.getContext('2d'); ctx.setTransform(DPR,0,0,DPR,0,0); }
-function redrawAll(){ document.querySelectorAll('canvas.responsive').forEach(fitCanvas); }
-
-/* ====== Demo data (identique, + transactions banque) ====== */
+/* ===== Demo data (ventes + produits + factures + banque) ===== */
 const DATA = (()=>{ 
-  const daily=[], start=new Date('2025-01-01'), end=new Date('2025-08-27');
-  for(let d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
-    const weekend=([0,6].includes(d.getDay())?1.25:0.8);
-    const trend=1+((d-start)/(1000*60*60*24))*0.0009;
-    const noise=1+(Math.random()*0.4-0.18);
+  const d0=new Date('2025-01-01'), d1=new Date('2025-08-27');
+  const daily=[]; for(let d=new Date(d0); d<=d1; d.setDate(d.getDate()+1)){
+    const weekend=([0,6].includes(d.getDay())?1.25:0.8), trend=1+((d-d0)/(1000*60*60*24))*0.0009, noise=1+(Math.random()*0.4-0.18);
     const ttc=Math.max(0,Math.round(700*weekend*trend*noise));
-    const taxRate=Math.random()<0.65?0.055:0.20;
-    const taxes=+(ttc*(taxRate/(1+taxRate))).toFixed(2);
-    daily.push({date:d.toISOString().slice(0,10), total_ttc:ttc, taxes, orders:Math.max(1,Math.round(ttc/35+(Math.random()*6-3)))});
+    const taxRate=Math.random()<0.65?0.055:0.20, taxes=+(ttc*(taxRate/(1+taxRate))).toFixed(2);
+    const type=(Math.random()<0.6?'SITE':(Math.random()<0.7?'PRO':'SALON')); // mix de canaux
+    daily.push({date:d.toISOString().slice(0,10), total_ttc:ttc, taxes, orders:Math.max(1,Math.round(ttc/35+(Math.random()*6-3))), type});
   }
-  const products=[{name:"Jasmin",category:"Thé Vert",price_ttc:8.9,cost_ht:2.1},
-                  {name:"Prince Ali",category:"Thé Noir",price_ttc:9.9,cost_ht:2.3},
-                  {name:"Soleil d'Orient",category:"Infusions",price_ttc:8.5,cost_ht:2.0},
-                  {name:"Baiser Fruité",category:"Tisanes",price_ttc:8.9,cost_ht:2.2},
-                  {name:"Éclat et Vitalité",category:"Infusions",price_ttc:7.9,cost_ht:2.0},
-                  {name:"Tisanière Verre",category:"Accessoires",price_ttc:24.9,cost_ht:6.5},
-                  {name:"Fouet Matcha",category:"Accessoires",price_ttc:15.9,cost_ht:3.5},
-                  {name:"Matcha Cérémonial Hisui 30g",category:"Matcha",price_ttc:19.0,cost_ht:13.0}];
+  const products=[{n:"Jasmin",c:"Thé Vert",pt:8.9,ch:2.1},{n:"Prince Ali",c:"Thé Noir",pt:9.9,ch:2.3},{n:"Soleil d'Orient",c:"Infusions",pt:8.5,ch:2.0},{n:"Baiser Fruité",c:"Tisanes",pt:8.9,ch:2.2},{n:"Éclat et Vitalité",c:"Infusions",pt:7.9,ch:2.0},{n:"Tisanière Verre",c:"Accessoires",pt:24.9,ch:6.5},{n:"Fouet Matcha",c:"Accessoires",pt:15.9,ch:3.5},{n:"Matcha Cérémonial Hisui 30g",c:"Matcha",pt:19.0,ch:13.0}];
   const prod_sales = products.map(p=>{
-    const qty = Math.floor(60+Math.random()*390);
-    const tva = p.category==="Accessoires"?0.20:0.055;
-    const ca = +(qty*p.price_ttc).toFixed(2);
-    const ht = +(ca/(1+tva)).toFixed(2);
-    const cost = +(qty*p.cost_ht).toFixed(2);
-    const marge = +(ht - cost).toFixed(2);
-    return {produit:p.name, collection:p.category, ventes:qty, ca_ttc:ca, ca_ht:ht, cout_ht:cost, marge_ht:marge, tva:tva};
+    const q=Math.floor(60+Math.random()*390), rate = (p.c==="Accessoires")?0.20:0.055;
+    const ca=+(q*p.pt).toFixed(2), ht=+(ca/(1+rate)).toFixed(2), cost=+(q*p.ch).toFixed(2), marge=+(ht-cost).toFixed(2);
+    return {produit:p.n, collection:p.c, ventes:q, ca_ttc:ca, ca_ht:ht, cout_ht:cost, marge_ht:marge, tva:rate};
   });
-  const competitors=[{date:"2025-08-20", competitor:"Kusmi Tea", type:"Nouveau produit", title:"Infusion Détox Citron-Gingembre", price:13.9, category:"Infusions", diff:"Bio + pack premium", source:"#"},
-                     {date:"2025-08-18", competitor:"Palais des Thés", type:"Promo", title:"-20% sur thés verts", price:null, category:"Thé Vert", diff:"Promo saisonnière", source:"#"},
-                     {date:"2025-08-12", competitor:"Panda Tea", type:"Collab", title:"Coffret Matcha x Créateur", price:24.9, category:"Matcha", diff:"Collaboration influenceur", source:"#"}];
-  const bankTx = Array.from({length:40},(_,i)=>{
-    const d=new Date(+start+Math.random()*(end-start)); const amt=(Math.random()<0.6?1:-1)*(20+Math.random()*500);
-    return {date:d.toISOString().slice(0,10), lib:(amt>0?'Paiement Shopify':'Frais/Appro'), montant:+amt.toFixed(2)};
-  }).sort((a,b)=>a.date<b.date?-1:1);
-  return {daily, products:prod_sales, competitors, bankTx};
+  // Factures Achats (démo) -> pour TVA récupérée et totaux par fournisseur
+  const expenses=[ // date, fournisseur, montant_ht, tva_rate, categorie
+    {date:"2025-02-05", supplier:"Thé Délices", ht:1250, tva:0.055, cat:"Stock"},
+    {date:"2025-01-28", supplier:"Imprint Vert", ht:340.5, tva:0.20, cat:"Packaging"},
+    {date:"2025-03-10", supplier:"TransLog", ht:210, tva:0.20, cat:"Transport"},
+    {date:"2025-04-18", supplier:"KraftBox", ht:870, tva:0.20, cat:"Packaging"},
+    {date:"2025-05-08", supplier:"BioHerbes", ht:620, tva:0.055, cat:"Stock"},
+  ];
+  // Transactions banque (démo)
+  const bankTx = Array.from({length:40},()=>{ const d=new Date(+d0+Math.random()*(d1-d0)); const amt=(Math.random()<0.6?1:-1)*(20+Math.random()*500); return {date:d.toISOString().slice(0,10), lib:(amt>0?'Paiement Shopify':'Frais/Appro'), montant:+amt.toFixed(2)}; }).sort((a,b)=>a.date<b.date?-1:1);
+  // Journal des ventes fusionné (démo) avec Zettle & Factures Ventes
+  const journal = daily.slice(0,160).map(x=>{
+    const tva_rate = Math.random()<0.7?0.055:(Math.random()<0.5?0.20:0.10);
+    const tva = +(x.total_ttc*(tva_rate/(1+tva_rate))).toFixed(2);
+    const ht = +(x.total_ttc - tva).toFixed(2);
+    return {date:x.date, client:`Client ${Math.ceil(Math.random()*2000)}`, type:x.type, ttc:x.total_ttc, ht:ht, tva20:(tva_rate===0.20?tva:0), tva55:(tva_rate===0.055?tva:0), tvaOther:(tva_rate!==0.20 && tva_rate!==0.055?tva:0)};
+  });
+  // Ajout ventes “Zettle” & “Facture” démo
+  for(let i=0;i<20;i++){
+    const date = new Date(+d0+Math.random()*(d1-d0)).toISOString().slice(0,10);
+    const ttc = 40+Math.round(Math.random()*120); const rate = Math.random()<0.5?0.20:0.055; const tva = +(ttc*(rate/(1+rate))).toFixed(2); const ht=ttc-tva;
+    journal.push({date, client:`Zettle #${1000+i}`, type:'SALON', ttc, ht, tva20:(rate===0.20?tva:0), tva55:(rate===0.055?tva:0), tvaOther:0});
+  }
+  for(let i=0;i<15;i++){
+    const date = new Date(+d0+Math.random()*(d1-d0)).toISOString().slice(0,10);
+    const ttc = 150+Math.round(Math.random()*600); const rate = 0.20; const tva = +(ttc*(rate/(1+rate))).toFixed(2); const ht=ttc-tva;
+    journal.push({date, client:`Facture #F${2000+i}`, type:'PRO', ttc, ht, tva20:tva, tva55:0, tvaOther:0});
+  }
+  return {daily, products:prod_sales, expenses, bankTx, journal,
+          competitors:[{date:"2025-08-20", competitor:"Kusmi Tea", type:"Nouveau produit", title:"Infusion Détox Citron-Gingembre", price:13.9, category:"Infusions", diff:"Bio + pack premium", source:"#"},
+                       {date:"2025-08-18", competitor:"Palais des Thés", type:"Promo", title:"-20% sur thés verts", price:null, category:"Thé Vert", diff:"Promo saisonnière", source:"#"},
+                       {date:"2025-08-12", competitor:"Panda Tea", type:"Collab", title:"Coffret Matcha x Créateur", price:24.9, category:"Matcha", diff:"Collaboration influenceur", source:"#"}] };
 })();
 
-/* ====== Router ====== */
+/* ===== Router ===== */
 document.querySelectorAll('.nav-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('visible'));
     document.getElementById(btn.dataset.target).classList.add('visible');
-    redrawAll(); renderAll(); // recalcul taille + rendus
+    redraw(); renderAll();
   });
 });
 
-/* ====== Périodes (début de mois = 1er) ====== */
+/* ===== Périodes (corrigé : début de mois = 1er, YTD = aujourd’hui) ===== */
 let CURRENT={from:null,to:null};
 function firstDay(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
 function setQuickRange(val){
   const today=new Date(); let from, to;
   if(val==='last7'){ to=today; from=new Date(today.getFullYear(), today.getMonth(), today.getDate()-6); }
-  else if(val==='mtd'){ to=today; from=firstDay(today); }
-  else if(val==='qtd'){ to=today; const qStart=Math.floor(today.getMonth()/3)*3; from=new Date(today.getFullYear(), qStart, 1); }
-  else if(val==='ytd'){ from=new Date(today.getFullYear(),0,1); to=new Date(today.getFullYear(),11,31); }
+  else if(val==='mtd'){ from=firstDay(today); to=today; }
+  else if(val==='qtd'){ const qStart=Math.floor(today.getMonth()/3)*3; from=new Date(today.getFullYear(), qStart, 1); to=today; }
+  else if(val==='ytd'){ from=new Date(today.getFullYear(),0,1); to=today; }
   else if(val==='all'){ from=new Date('2025-01-01'); to=today; }
   else { from=new Date('2025-01-01'); to=today; }
   byId('from').value = from.toISOString().slice(0,10);
   byId('to').value   = to.toISOString().slice(0,10);
 }
-byId('quickRange').addEventListener('change', e=> setQuickRange(e.target.value));
-byId('applyRange').addEventListener('click', ()=>{ CURRENT.from=new Date(byId('from').value); CURRENT.to=new Date(byId('to').value); renderAll(); });
+document.getElementById('quickRange').addEventListener('change', e=> setQuickRange(e.target.value));
+document.getElementById('applyRange').addEventListener('click', ()=>{ CURRENT.from=new Date(byId('from').value); CURRENT.to=new Date(byId('to').value); renderAll(); });
 
-/* ====== Tabel & Charts helpers (graduations + couleurs) ====== */
+/* ===== Tables & Charts helpers ===== */
 function renderTable(table, headers, rows){
   table.innerHTML=''; const thead=document.createElement('thead'); const trh=document.createElement('tr');
   headers.forEach(h=>{const th=document.createElement('th'); th.textContent=h; trh.appendChild(th);}); thead.appendChild(trh);
@@ -394,20 +374,14 @@ function lineChart(canvas, labels, values, color){
   for(let i=0;i<=ticks;i++){ const y=padT+(H-padT-padB)*(i/ticks);
     ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
     const val=Math.round(max-(max-min)*(i/ticks));
-    ctx.fillStyle='#6b778a'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.font='12px system-ui';
-    ctx.fillText(val.toLocaleString('fr-FR'), padL-6, y);
+    ctx.fillStyle='#6b778a'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.font='12px system-ui'; ctx.fillText(val.toLocaleString('fr-FR'), padL-6, y);
   }
   const xCount=Math.min(8,labels.length-1);
   for(let i=0;i<=xCount;i++){ const xi=Math.round((labels.length-1)*(i/xCount));
-    const x=padL+(W-padL-padR)*(xi/(labels.length-1));
-    ctx.fillStyle='#6b778a'; ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui';
-    ctx.fillText(labels[xi], x, H-padB+6);
+    const x=padL+(W-padL-padR)*(xi/(labels.length-1)); ctx.fillStyle='#6b778a'; ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui'; ctx.fillText(labels[xi], x, H-padB+6);
   }
   ctx.strokeStyle=color; ctx.lineWidth=2; ctx.beginPath();
-  values.forEach((v,i)=>{ const x=padL+(W-padL-padR)*(i/(values.length-1));
-    const y=padT+(H-padT-padB)*(1-(v-min)/(max-min));
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  }); ctx.stroke();
+  values.forEach((v,i)=>{ const x=padL+(W-padL-padR)*(i/(values.length-1)); const y=padT+(H-padT-padB)*(1-(v-min)/(max-min)); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke();
 }
 function barChart(canvas, labels, values, color){
   fitCanvas(canvas);
@@ -431,34 +405,41 @@ function pieChart(canvas, values, colors){
   values.forEach((v,i)=>{ const a=(v/total)*Math.PI*2; ctx.beginPath(); ctx.moveTo(W/2,H/2); ctx.arc(W/2,H/2,r,ang,ang+a); ctx.closePath(); ctx.fillStyle=colors[i%colors.length]; ctx.fill(); ang+=a; });
 }
 
-/* ====== Calculs KPI ====== */
+/* ===== Calculs KPI (incl. TVA déductible & collectée par taux) ===== */
 function withinPeriod(d){ const w=new Date(d); return (!CURRENT.from||w>=CURRENT.from)&&(!CURRENT.to||w<=CURRENT.to); }
 function computeKPIs(){
   const days=DATA.daily.filter(x=>withinPeriod(x.date));
-  const cattt=days.reduce((s,x)=>s+x.total_ttc,0), taxes=days.reduce((s,x)=>s+x.taxes,0), caht=cattt-taxes;
-  const orders=days.reduce((s,x)=>s+x.orders,0);
+  const cattt=days.reduce((s,x)=>s+x.total_ttc,0), taxes=days.reduce((s,x)=>s+x.taxes,0), caht=cattt-taxes, orders=days.reduce((s,x)=>s+x.orders,0);
   const fixed=3800, months=Math.max(1, ((CURRENT.to-CURRENT.from)/(1000*60*60*24*30)));
   const fixedProrata=fixed*months, variable=cattt*0.18, cogs=caht*0.42, marge=caht-cogs, result=caht-cogs-fixedProrata-variable;
 
-  /* Split TVA 5,5% / 20% (estimation à partir des ventes par collection) */
-  const caByRate = DATA.products.reduce((acc,p)=>{ const rate = p.collection==="Accessoires" ? 't20' : 't55'; acc[rate]=(acc[rate]||0)+p.ca_ttc; return acc; },{t55:0,t20:0});
-  const share55 = (caByRate.t55)/(caByRate.t55+caByRate.t20||1), share20=1-share55;
-  const tva55 = taxes*share55, tva20 = taxes*share20;
+  // TVA collectée par taux (approximée via journal fusionné)
+  const jrows = DATA.journal.filter(x=>withinPeriod(x.date));
+  const tvaCol55 = jrows.reduce((s,x)=>s+(x.tva55||0),0);
+  const tvaCol20 = jrows.reduce((s,x)=>s+(x.tva20||0),0);
+  const tvaColOther = jrows.reduce((s,x)=>s+(x.tvaOther||0),0);
+  const tvaColTotal = tvaCol55 + tvaCol20 + tvaColOther || taxes;
 
-  return {days, cattt, caht, taxes, tva55, tva20, orders, marge, result, fixedProrata, variable, cogs};
+  // TVA déductible (récupérée) depuis dépenses (factures achats)
+  const exps = DATA.expenses.filter(e=>withinPeriod(e.date));
+  const tvaDed55 = exps.filter(e=>e.tva===0.055).reduce((s,e)=>s+e.ht*e.tva,0);
+  const tvaDed20 = exps.filter(e=>e.tva===0.20).reduce((s,e)=>s+e.ht*e.tva,0);
+  const tvaDedTotal = tvaDed55 + tvaDed20;
+
+  return {days, cattt, caht, taxes: tvaColTotal, tva55:tvaCol55, tva20:tvaCol20, tvaOther:tvaColOther,
+          tvaDed55, tvaDed20, tvaDedTotal,
+          orders, marge, result, fixedProrata, variable, cogs};
 }
 
-/* ====== Renderers ====== */
+/* ===== Renderers ===== */
 function renderDashboard(k){
   byId('kpi-cattt').textContent=fmtEUR(k.cattt);
   byId('kpi-caht').textContent=fmtEUR(k.caht);
   byId('kpi-marge').textContent=fmtEUR(k.marge);
-  byId('kpi-tva').textContent=fmtEUR(k.taxes);
-  byId('kpi-tva-detail').textContent=`5,5%: ${fmtEUR(k.tva55)} • 20%: ${fmtEUR(k.tva20)}`;
-
-  const box=byId('kpi-result-box'), v=byId('kpi-result');
-  if(k.result>=0){ box.classList.add('success'); box.classList.remove('danger'); v.textContent='+'+fmtEUR(k.result);}
-  else{ box.classList.add('danger'); box.classList.remove('success'); v.textContent='−'+fmtEUR(Math.abs(k.result));}
+  byId('kpi-tva-col').textContent=fmtEUR(k.tva55 + k.tva20 + k.tvaOther);
+  byId('kpi-tva-col-detail').textContent=`5,5%: ${fmtEUR(k.tva55)} • 20%: ${fmtEUR(k.tva20)} • Autre: ${fmtEUR(k.tvaOther)}`;
+  byId('kpi-tva-ded').textContent=fmtEUR(k.tvaDedTotal);
+  byId('kpi-tva-ded-detail').textContent=`5,5%: ${fmtEUR(k.tvaDed55)} • 20%: ${fmtEUR(k.tvaDed20)}`;
 
   const labels=k.days.map(x=>x.date.slice(5)), values=k.days.map(x=>x.total_ttc);
   lineChart(byId('dashLine'), labels, values, '#1f5fbf');
@@ -471,43 +452,72 @@ function renderDashboard(k){
   const totalExp=expVals.reduce((a,b)=>a+b,0);
   byId('legend-expenses').innerHTML = expVals.map((v,i)=>`<span class="item"><span class="dot" style="background:${expColors[i]}"></span>${expNames[i]} — ${Math.round(v*100/totalExp)}%</span>`).join('');
 
-  /* Canaux : Site / Pro(Revendeurs+B2B) / Salons */
-  const chNames=['Site','Pro/Revendeurs','Salons'];
-  const chVals=[k.cattt*0.6, k.cattt*0.28, k.cattt*0.12];
-  barChart(byId('dashBar'), chNames, chVals, '#888'); // couleur par barre ci-dessous via légende
+  const chNames=['Site','Pro/Revendeurs','Salons'], chVals=[k.cattt*0.6,k.cattt*0.28,k.cattt*0.12];
+  barChart(byId('dashBar'), chNames, chVals, '#888');
   const chCols=['var(--col-site)','var(--col-pro)','var(--col-salons)'];
   const totalCh=chVals.reduce((a,b)=>a+b,0);
   byId('legend-channels').innerHTML = chVals.map((v,i)=>`<span class="item"><span class="dot" style="background:${getComputedStyle(document.documentElement).getPropertyValue(chCols[i])}"></span>${chNames[i]} — ${Math.round(v*100/totalCh)}%</span>`).join('');
+
+  // Top 10 ventes / flops (par marge)
+  const items = DATA.products.slice();
+  const top10 = items.slice().sort((a,b)=>b.ca_ttc-a.ca_ttc).slice(0,10);
+  const flop10 = items.slice().sort((a,b)=>a.marge_ht-b.marge_ht).slice(0,10);
+  byId('top10').innerHTML = top10.map(x=>`<li>${x.produit} — ${fmtEUR(x.ca_ttc)}</li>`).join('');
+  byId('flop10').innerHTML = flop10.map(x=>`<li>${x.produit} — marge ${fmtEUR(x.marge_ht)}</li>`).join('');
 }
 function renderSales(k){
-  byId('sales-cattt').textContent=fmtEUR(k.cattt);
-  byId('sales-orders').textContent=k.orders.toLocaleString('fr-FR');
-  const aov=k.orders>0?k.cattt/k.orders:0; byId('sales-aov').textContent=fmtEUR(aov);
-  byId('sales-repeat').textContent=(18+(aov>40?5:0)).toFixed(1)+' %';
+  // Récap CA & commandes par type + panier moyen
+  const J = DATA.journal.filter(x=>withinPeriod(x.date));
+  const types = ['SITE','PRO','SALON'];
+  const recapCA = types.map(t=>{
+    const rows=J.filter(r=>r.type===t);
+    const ca = rows.reduce((s,r)=>s+r.ttc,0);
+    const orders = rows.length;
+    const aov = orders? ca/orders : 0;
+    return {Type:t, 'CA TTC':fmtEUR(ca), 'Panier moyen':fmtEUR(aov)};
+  });
+  renderTable(byId('salesRecapCA'), ['Type','CA TTC','Panier moyen'], recapCA);
+  const recapOrders = types.map(t=>{
+    const rows=J.filter(r=>r.type===t);
+    return {Type:t, Commandes: rows.length.toLocaleString('fr-FR')};
+  });
+  renderTable(byId('salesRecapOrders'), ['Type','Commandes'], recapOrders);
 
+  // Collections
+  const byCol = DATA.products.reduce((acc,p)=>{ acc[p.collection]=(acc[p.collection]||0)+p.ca_ttc; return acc; },{});
+  barChart(byId('salesCollections'), Object.keys(byCol), Object.values(byCol), '#0f8a5f');
+
+  // Ventes quotidiennes + CA par mois
   lineChart(byId('salesLine'), k.days.map(d=>d.date.slice(5)), k.days.map(d=>d.total_ttc), '#1f5fbf');
-
-  const monthly={}; k.days.forEach(d=>{ const m=d.date.slice(0,7); monthly[m]=(monthly[m]||0)+d.total_ttc; });
+  const monthly={}; k.days.forEach(d=>{const m=d.date.slice(0,7); monthly[m]=(monthly[m]||0)+d.total_ttc;});
   barChart(byId('salesBar'), Object.keys(monthly), Object.values(monthly), '#d06a4e');
 
-  /* CA par Collection (à partir des produits) */
-  const byCol = DATA.products.reduce((acc,p)=>{ acc[p.collection]=(acc[p.collection]||0)+p.ca_ttc; return acc; },{});
-  const cols=Object.keys(byCol), vals=cols.map(k=>byCol[k]);
-  barChart(byId('salesCollections'), cols, vals, '#0f8a5f');
+  // Journal fusionné (avec TVA par colonnes)
+  const hdr=['Date','Client','Type','Montant TTC','Montant HT','TVA 20%','TVA 5,5%','Autre TVA'];
+  const rows = J.slice().sort((a,b)=>a.date<b.date?1:-1).map(r=>({
+    'Date':r.date, 'Client':r.client, 'Type':r.type,
+    'Montant TTC':fmtEUR(r.ttc), 'Montant HT':fmtEUR(r.ht),
+    'TVA 20%':fmtEUR(r.tva20||0), 'TVA 5,5%':fmtEUR(r.tva55||0), 'Autre TVA':fmtEUR(r.tvaOther||0)
+  }));
+  renderTable(byId('salesTable'), hdr, rows);
 
-  const rows=k.days.slice(-20).reverse().map(d=>({Date:d.date, Client:'Client '+Math.ceil(Math.random()*2000), Montant:fmtEUR(d.total_ttc), Statut:(Math.random()>0.15?'Soldée':'En cours'), Canal:(['Site','Salon','Pro'][Math.floor(Math.random()*3)])}));
-  renderTable(byId('salesTable'), ['Date','Client','Montant','Statut','Canal'], rows);
-
-  byId('exportCsv').onclick=()=>{ const header='date,total_ttc,taxes,orders\n'; const content=k.days.map(d=>`${d.date},${d.total_ttc},${d.taxes},${d.orders}`).join('\n'); const blob=new Blob([header+content],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='journal_ventes.csv'; a.click(); };
+  byId('exportCsv').onclick=()=>{
+    const header='date,client,type,ttc,ht,tva20,tva55,tva_other\n';
+    const content=J.map(r=>`${r.date},${r.client},${r.type},${r.ttc},${r.ht},${r.tva20||0},${r.tva55||0},${r.tvaOther||0}`).join('\n');
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([header+content],{type:'text/csv'})); a.download='journal_ventes.csv'; a.click();
+  };
 }
 function renderProducts(){
   const items=DATA.products.slice();
-  items.forEach(it=>{ it.marge_pct=it.ca_ht>0?(it.marge_ht/it.ca_ht)*100:0; it.suggestion=(it.marge_ht<0||it.marge_pct<5||it.ca_ht<500)?'À arrêter':(it.marge_pct>55&&it.ca_ht<3000)?'Booster en pack':(it.marge_pct>45&&it.ca_ht>=3000)?'Mettre en avant':'—'; });
+  items.forEach(it=>{ it.marge_pct=it.ca_ht>0?(it.marge_ht/it.ca_ht)*100:0;
+    it.suggestion=(it.marge_ht<0||it.marge_pct<5||it.ca_ht<500)?'À arrêter':(it.marge_pct>55&&it.ca_ht<3000)?'Booster en pack':(it.marge_pct>45&&it.ca_ht>=3000)?'Mettre en avant':'—'; });
   const qty=items.reduce((s,x)=>s+x.ventes,0), ca=items.reduce((s,x)=>s+x.ca_ttc,0), margin=items.reduce((s,x)=>s+x.marge_ht,0), roi=(margin/(items.reduce((s,x)=>s+x.ca_ht,0)||1))*100;
   byId('prod-qty').textContent=qty.toLocaleString('fr-FR'); byId('prod-ca').textContent=fmtEUR(ca); byId('prod-margin').textContent=fmtEUR(margin); byId('prod-roi').textContent=roi.toFixed(1)+' %';
+
   const headers=['Produit','Collection','Ventes','CA TTC','Coût HT','Marge HT','Rentabilité','Suggestion'];
-  const rows=items.map(x=>({'Produit':x.produit,'Collection':x.collection,'Ventes':x.ventes.toLocaleString('fr-FR'),'CA TTC':fmtEUR(x.ca_ttc),'Coût HT':fmtEUR(x.cout_ht),'Marge HT':fmtEUR(x.marge_ht),'Rentabilité':x.marge_pct.toFixed(1)+' %','Suggestion':x.suggestion}));
+  const rows=items.map(x=>({'Produit':x.produit,'Collection':x.collection,'Ventes':x.ventes.toLocaleString('fr-FR'),'CA TTC':fmtEUR(x.ca_ttc),'Coût HT':fmtEUR(x.cout_ht),'Marge HT':fmtEUR(x.marge_ht),'Rentabilité':(x.marge_ht/x.ca_ht*100||0).toFixed(1)+' %','Suggestion':x.suggestion}));
   renderTable(byId('prodTable'), headers, rows);
+
   const top=items.slice().sort((a,b)=>b.ca_ttc-a.ca_ttc).slice(0,5), flop=items.slice().sort((a,b)=>a.marge_ht-b.marge_ht).slice(0,5);
   byId('topList').innerHTML=top.map(x=>`<li>${x.produit} — ${fmtEUR(x.ca_ttc)}</li>`).join('');
   byId('flopList').innerHTML=flop.map(x=>`<li>${x.produit} — marge ${fmtEUR(x.marge_ht)}</li>`).join('');
@@ -515,26 +525,35 @@ function renderProducts(){
   barChart(byId('prodBar'), items.map(x=>x.produit.slice(0,12)), items.map(x=>x.ca_ttc), '#1f5fbf');
   barChart(byId('prodBar2'), items.map(x=>x.produit.slice(0,12)), items.map(x=>x.marge_pct), '#0f8a5f');
 }
+function renderInvoices(){
+  const rows = DATA.expenses.filter(e=>withinPeriod(e.date)).map(e=>({
+    'Date':e.date, 'Fournisseur':e.supplier, 'Montant HT':fmtEUR(e.ht), 'TVA':(e.tva*100).toFixed(1)+'%', 'Catégorie':e.cat, 'Statut':'—'
+  }));
+  renderTable(byId('invTable'), ['Date','Fournisseur','Montant HT','TVA','Catégorie','Statut'], rows);
+
+  // Totaux par fournisseur
+  const sum = {};
+  DATA.expenses.filter(e=>withinPeriod(e.date)).forEach(e=>{ sum[e.supplier]=(sum[e.supplier]||0)+e.ht*(1+e.tva); });
+  const srows = Object.entries(sum).map(([sup,ttc])=>({'Fournisseur':sup,'Total TTC':fmtEUR(ttc)}));
+  renderTable(byId('invBySupplier'), ['Fournisseur','Total TTC'], srows);
+}
 function renderBenchmark(){
   const headers=['Date','Concurrent','Type','Produit','Prix','Catégorie','Différenciateur','Source'];
   const rows=DATA.competitors.map(c=>({'Date':c.date,'Concurrent':c.competitor,'Type':c.type,'Produit':c.title,'Prix':c.price?fmtEUR(c.price):'—','Catégorie':c.category,'Différenciateur':c.diff,'Source':c.source}));
   renderTable(byId('benchTable'), headers, rows);
   barChart(byId('benchBar'), ['Papothé','Kusmi','PDT','Panda'], [12.5,13.9,14.5,12.9], '#d06a4e');
 }
-
-/* ====== Imports ====== */
-byId('impValidate').addEventListener('click', ()=>{
-  const type = byId('impType').value;
-  const files = Array.from(byId('impFiles').files||[]);
-  const rows = files.map(f=>({Fichier:f.name, Type:type, Taille:(f.size/1024).toFixed(1)+' Ko', Statut:'À traiter'}));
-  renderTable(byId('impTable'), ['Fichier','Type','Taille','Statut'], rows);
-  alert(`${files.length} fichier(s) prêt(s) pour import (${type}). (Démo UI)`);
-});
-
-/* ====== Banque ====== */
+function renderImports(){
+  byId('impValidate').onclick=()=>{
+    const type=byId('impType').value, files=Array.from(byId('impFiles').files||[]);
+    const rows = files.map(f=>({Fichier:f.name, Type:type, Taille:(f.size/1024).toFixed(1)+' Ko', Statut:'À traiter'}));
+    renderTable(byId('impTable'), ['Fichier','Type','Taille','Statut'], rows);
+    alert(`${files.length} fichier(s) prêt(s) pour import (${type}). (Démo UI)`);
+  };
+}
 function renderBank(){
   const tx = DATA.bankTx.filter(t=>withinPeriod(t.date));
-  const balance = tx.reduce((s,t)=>s+t.montant, 2500); // solde de départ démo
+  const balance = tx.reduce((s,t)=>s+t.montant, 2500);
   const inflow  = tx.filter(t=>t.montant>0).reduce((s,t)=>s+t.montant,0);
   const outflow = -tx.filter(t=>t.montant<0).reduce((s,t)=>s+t.montant,0);
   byId('bank-balance').textContent=fmtEUR(balance);
@@ -544,30 +563,27 @@ function renderBank(){
   renderTable(byId('bankTable'), ['Date','Libellé','Montant'], rows);
 }
 
-/* ====== Orchestration ====== */
-function renderAll(){ const k=computeKPIs(); renderDashboard(k); renderSales(k); renderProducts(); renderBenchmark(); renderBank(); }
-function init(){
-  const today=new Date();
-  byId('from').value=(new Date(today.getFullYear(),0,1)).toISOString().slice(0,10);
-  byId('to').value=(new Date(today.getFullYear(),11,31)).toISOString().slice(0,10);
+/* ===== Orchestration ===== */
+function renderAll(){ const k=computeKPIs(); renderDashboard(k); renderSales(k); renderProducts(); renderInvoices(); renderBenchmark(); renderImports(); renderBank(); }
+(function init(){
+  const today=new Date(); byId('from').value=(new Date(today.getFullYear(),0,1)).toISOString().slice(0,10);
+  byId('to').value=today.toISOString().slice(0,10);
   CURRENT.from=new Date(byId('from').value); CURRENT.to=new Date(byId('to').value);
-  redrawAll(); renderAll();
-  window.addEventListener('resize', ()=>{ redrawAll(); renderAll(); });
-}
-init();
+  redraw(); renderAll(); window.addEventListener('resize', ()=>{redraw(); renderAll();});
+})();
 
-/* ====== Navigation ====== */
+/* ===== Navigation rebind (sûreté) ===== */
 document.querySelectorAll('.nav-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('visible'));
     document.getElementById(btn.dataset.target).classList.add('visible');
-    redrawAll(); renderAll();
+    redraw(); renderAll();
   });
 });
 
-/* ====== Exports ====== */
+/* ===== Export ===== */
 byId('exportAll').addEventListener('click', ()=>{ const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='papothe_data.json'; a.click(); });
 </script>
 </body>
