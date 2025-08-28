@@ -7,36 +7,47 @@
 <link rel="icon" href="data:,">
 <style>
 :root{
-  --bg:#faf7f4; --card:#ffffff; --ink:#0f2747; --muted:#6b778a;
-  --brand:#d06a4e; --accent:#11335b; --success:#0f8a5f; --danger:#c13515;
-  --shadow:0 6px 18px rgba(15,39,71,.08); --radius:14px;
+  /* === Couleurs Papothé (modifiable ici) === */
+  --bg:#faf7f4;
+  --card:#ffffff;
+  --ink:#0f2747;         /* Bleu Papothé (texte) */
+  --muted:#6b778a;
+  --brand:#d06a4e;       /* Terracotta Papothé */
+  --accent:#11335b;      /* Navy Papothé */
+  --success:#0f8a5f;
+  --danger:#c13515;
+  --shadow:0 6px 18px rgba(15,39,71,.08);
+  --radius:14px;
+
+  /* Couleurs par canal */
+  --col-site:#1f5fbf;
+  --col-pro:#d06a4e;     /* Pro/Revendeurs */
+  --col-salons:#0f8a5f;
 }
-*{box-sizing:border-box} html,body{margin:0;height:100%;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto}
+
+/* Reset & layout */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto}
 body{background:var(--bg);color:var(--ink)}
-/* ======= TOP NAVBAR ======= */
-.topbar{
-  position:sticky; top:0; z-index:50;
-  background:linear-gradient(180deg,#fff,#f6f2ec);
-  border-bottom:1px solid #eee; box-shadow:var(--shadow);
-}
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#fff,#f6f2ec);border-bottom:1px solid #eee;box-shadow:var(--shadow)}
 .topbar-inner{max-width:1200px;margin:auto;display:flex;align-items:center;gap:16px;padding:10px 16px;flex-wrap:wrap}
-.brand{font-weight:800;font-size:20px;color:var(--accent);white-space:nowrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--accent);white-space:nowrap}
+.brand img{width:28px;height:28px;border-radius:6px;object-fit:contain;background:#fff}
 .nav{display:flex;gap:6px;flex-wrap:wrap}
 .nav-btn{border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--ink)}
-.nav-btn:hover{background:#f1ece7}
-.nav-btn.active{background:var(--accent);color:#fff}
+.nav-btn:hover{background:#f1ece7}.nav-btn.active{background:var(--accent);color:#fff}
 .period{margin-left:auto;display:flex;gap:8px;align-items:center;background:#fff;border-radius:10px;padding:6px 8px}
 .period select,.period input,.period button{border:1px solid #e5e5e5;border-radius:8px;padding:8px 10px}
 .period button{background:var(--brand);color:#fff;border:0;cursor:pointer}
 .period button:hover{filter:brightness(.95)}
-/* ======= LAYOUT ======= */
+
 .container{max-width:1200px;margin:22px auto;padding:0 16px}
-.page{display:none}
-.page.visible{display:block}
+.page{display:none}.page.visible{display:block}
 h1{margin:8px 0 16px}
 .kpis{display:grid;grid-template-columns:repeat(5,minmax(160px,1fr));gap:14px;margin-bottom:16px}
 .kpi{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow)}
 .kpi strong{font-size:22px}.kpi.success strong{color:var(--success)}.kpi.danger strong{color:var(--danger)}
+.kpi small{display:block;color:var(--muted);margin-top:6px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow)}
 .card h3{margin:0 0 10px}
@@ -46,13 +57,14 @@ h1{margin:8px 0 16px}
 .badge{padding:4px 8px;border-radius:999px;font-size:12px}.badge.success{background:#e7f6ef;color:#0f8a5f}.badge.warn{background:#fff6e0;color:#9c6a05}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .form label{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.form input{padding:10px;border:1px solid #e4e4e4;border-radius:8px}
+.form input,.form select{padding:10px;border:1px solid #e4e4e4;border-radius:8px}
 button.btn{border:0;background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer}
 button.btn:hover{filter:brightness(.95)}
 .score{margin-top:10px;padding:10px;background:#f5faf7;border:1px solid #d3efe3;border-radius:8px;color:var(--success);font-weight:700}
 .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:13px}
 .legend .item{display:flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px}
 .legend .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+
 /* Responsive */
 @media (max-width:1100px){
   .kpis{grid-template-columns:1fr 1fr}
@@ -69,10 +81,13 @@ canvas.responsive{width:100%;height:auto;display:block}
 </head>
 <body>
 
-<!-- ======= TOP NAV ======= -->
+<!-- Top bar -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand">Papothé</div>
+    <div class="brand">
+      <img src="https://papothe.fr/favicon.ico" alt="Papothé" onerror="this.style.display='none'">
+      <span>Papothé</span>
+    </div>
     <div class="nav">
       <button class="nav-btn active" data-target="dashboard">Tableau de bord</button>
       <button class="nav-btn" data-target="sales">Ventes</button>
@@ -80,6 +95,8 @@ canvas.responsive{width:100%;height:auto;display:block}
       <button class="nav-btn" data-target="invoices">Factures</button>
       <button class="nav-btn" data-target="projects">Projets</button>
       <button class="nav-btn" data-target="benchmark">Benchmark</button>
+      <button class="nav-btn" data-target="imports">Import manuel</button>
+      <button class="nav-btn" data-target="bank">Compte en Banque</button>
       <button class="nav-btn" data-target="exports">Exports</button>
     </div>
     <div class="period">
@@ -100,14 +117,17 @@ canvas.responsive{width:100%;height:auto;display:block}
 
 <div class="container">
 
-  <!-- DASHBOARD -->
+  <!-- Dashboard -->
   <section id="dashboard" class="page visible">
     <h1>Tableau de bord</h1>
     <div class="kpis">
       <div class="kpi"><div>CA TTC</div><strong id="kpi-cattt">—</strong></div>
       <div class="kpi"><div>CA HT</div><strong id="kpi-caht">—</strong></div>
       <div class="kpi"><div>Marge brute</div><strong id="kpi-marge">—</strong></div>
-      <div class="kpi"><div>TVA collectée</div><strong id="kpi-tva">—</strong></div>
+      <div class="kpi"><div>TVA collectée</div>
+        <strong id="kpi-tva">—</strong>
+        <small id="kpi-tva-detail">—</small>
+      </div>
       <div class="kpi" id="kpi-result-box"><div>Résultat net</div><strong id="kpi-result">—</strong></div>
     </div>
     <div class="grid-2">
@@ -134,7 +154,7 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- SALES -->
+  <!-- Ventes -->
   <section id="sales" class="page">
     <h1>Ventes</h1>
     <div class="kpis">
@@ -147,6 +167,7 @@ canvas.responsive{width:100%;height:auto;display:block}
       <div class="card"><h3>Ventes quotidiennes</h3><canvas id="salesLine" class="responsive"></canvas></div>
       <div class="card"><h3>CA par mois</h3><canvas id="salesBar" class="responsive"></canvas></div>
     </div>
+    <div class="card"><h3>CA par Collection</h3><canvas id="salesCollections" class="responsive"></canvas></div>
     <div class="card">
       <h3>Journal des ventes (échantillon)</h3>
       <table id="salesTable" class="table"></table>
@@ -154,7 +175,7 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- PRODUCTS -->
+  <!-- Produits -->
   <section id="products" class="page">
     <h1>Produits</h1>
     <div class="kpis">
@@ -164,10 +185,7 @@ canvas.responsive{width:100%;height:auto;display:block}
       <div class="kpi"><div>Rentabilité moyenne</div><strong id="prod-roi">—</strong></div>
     </div>
     <div class="grid-2">
-      <div class="card">
-        <h3>Détails par produit</h3>
-        <table id="prodTable" class="table"></table>
-      </div>
+      <div class="card"><h3>Détails par produit</h3><table id="prodTable" class="table"></table></div>
       <div class="card">
         <h3>Classements</h3>
         <div class="cols">
@@ -182,7 +200,7 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- INVOICES -->
+  <!-- Factures -->
   <section id="invoices" class="page">
     <h1>Factures</h1>
     <div class="card">
@@ -201,7 +219,7 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- Projets -->
   <section id="projects" class="page">
     <h1>Projets & Scénarios</h1>
     <div class="grid-2">
@@ -226,88 +244,130 @@ canvas.responsive{width:100%;height:auto;display:block}
     </div>
   </section>
 
-  <!-- BENCHMARK -->
+  <!-- Benchmark -->
   <section id="benchmark" class="page">
     <h1>Benchmark Concurrence</h1>
     <div class="grid-2">
-      <div class="card">
-        <h3>Nouveautés</h3>
-        <table id="benchTable" class="table"></table>
-      </div>
-      <div class="card">
-        <h3>Prix moyens concurrents vs Papothé (démo)</h3>
-        <canvas id="benchBar" class="responsive"></canvas>
-      </div>
+      <div class="card"><h3>Nouveautés</h3><table id="benchTable" class="table"></table></div>
+      <div class="card"><h3>Prix moyens concurrents vs Papothé (démo)</h3><canvas id="benchBar" class="responsive"></canvas></div>
     </div>
   </section>
 
-  <!-- EXPORTS -->
+  <!-- Import manuel -->
+  <section id="imports" class="page">
+    <h1>Import manuel</h1>
+    <div class="card">
+      <div class="form">
+        <label>Type de document
+          <select id="impType">
+            <option>Factures Achats</option>
+            <option>Factures Ventes</option>
+            <option>Relevé de compte</option>
+            <option>Journal de transactions (Zettle / salons)</option>
+          </select>
+        </label>
+        <label>Ajouter des fichiers
+          <input id="impFiles" type="file" multiple/>
+        </label>
+        <button id="impValidate" class="btn">Valider l'import</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Fichiers sélectionnés</h3>
+      <table id="impTable" class="table"></table>
+    </div>
+  </section>
+
+  <!-- Compte en Banque -->
+  <section id="bank" class="page">
+    <h1>Compte en Banque</h1>
+    <div class="kpis">
+      <div class="kpi"><div>Solde (démo)</div><strong id="bank-balance">—</strong></div>
+      <div class="kpi"><div>Entrées (période)</div><strong id="bank-in">—</strong></div>
+      <div class="kpi"><div>Sorties (période)</div><strong id="bank-out">—</strong></div>
+    </div>
+    <div class="card">
+      <h3>Transactions</h3>
+      <table id="bankTable" class="table"></table>
+    </div>
+  </section>
+
+  <!-- Exports -->
   <section id="exports" class="page">
     <h1>Exports</h1>
-    <div class="card">
-      <button id="exportAll" class="btn">⬇️ Télécharger les données (JSON)</button>
-    </div>
+    <div class="card"><button id="exportAll" class="btn">⬇️ Télécharger les données (JSON)</button></div>
   </section>
 
 </div>
 
 <script>
-/* ---------- State & Utils ---------- */
+/* ====== Helpers & responsive canvas ====== */
 const DPR = window.devicePixelRatio || 1;
 const fmtEUR = n => n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 const byId = id => document.getElementById(id);
 
-/* ---------- Demo Data (same as avant) ---------- */
+function fitCanvas(c){ const box=c.getBoundingClientRect(); c.width=Math.max(300,Math.floor(box.width*DPR)); c.height=Math.floor((box.width*0.45)*DPR); const ctx=c.getContext('2d'); ctx.setTransform(DPR,0,0,DPR,0,0); }
+function redrawAll(){ document.querySelectorAll('canvas.responsive').forEach(fitCanvas); }
+
+/* ====== Demo data (identique, + transactions banque) ====== */
 const DATA = (()=>{ 
   const daily=[], start=new Date('2025-01-01'), end=new Date('2025-08-27');
   for(let d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
-    const weekend = ([0,6].includes(d.getDay())?1.25:0.8);
-    const trend = 1 + ( (d-start)/(1000*60*60*24) )*0.0009;
-    const noise = 1 + (Math.random()*0.4-0.18);
-    const ttc = Math.max(0, Math.round(700*weekend*trend*noise));
-    const taxRate = Math.random()<0.65?0.055:0.20;
-    const taxes = +(ttc*(taxRate/(1+taxRate))).toFixed(2);
-    daily.push({date:d.toISOString().slice(0,10), total_ttc:ttc, taxes, orders:Math.max(1, Math.round(ttc/35 + (Math.random()*6-3)))});
+    const weekend=([0,6].includes(d.getDay())?1.25:0.8);
+    const trend=1+((d-start)/(1000*60*60*24))*0.0009;
+    const noise=1+(Math.random()*0.4-0.18);
+    const ttc=Math.max(0,Math.round(700*weekend*trend*noise));
+    const taxRate=Math.random()<0.65?0.055:0.20;
+    const taxes=+(ttc*(taxRate/(1+taxRate))).toFixed(2);
+    daily.push({date:d.toISOString().slice(0,10), total_ttc:ttc, taxes, orders:Math.max(1,Math.round(ttc/35+(Math.random()*6-3)))});
   }
-  const products=[{name:"Jasmin",sku:"TEA-JASM",category:"thé vert",price_ttc:8.9,cost_ht:2.1},{name:"Prince Ali",sku:"TEA-ALIP",category:"thé noir",price_ttc:9.9,cost_ht:2.3},{name:"Soleil d'Orient",sku:"TEA-SOLI",category:"infusion",price_ttc:8.5,cost_ht:2.0},{name:"Baiser Fruité",sku:"TEA-BAIS",category:"infusion",price_ttc:8.9,cost_ht:2.2},{name:"Éclat et Vitalité",sku:"TEA-EVIT",category:"infusion",price_ttc:7.9,cost_ht:2.0},{name:"Tisanière Verre",sku:"ACC-TISA",category:"accessoire",price_ttc:24.9,cost_ht:6.5},{name:"Fouet Matcha",sku:"ACC-FUET",category:"accessoire",price_ttc:15.9,cost_ht:3.5},{name:"Matcha Cérémonial Hisui 30g",sku:"MAC-HISU-30",category:"matcha",price_ttc:19.0,cost_ht:13.0}];
+  const products=[{name:"Jasmin",category:"Thé Vert",price_ttc:8.9,cost_ht:2.1},
+                  {name:"Prince Ali",category:"Thé Noir",price_ttc:9.9,cost_ht:2.3},
+                  {name:"Soleil d'Orient",category:"Infusions",price_ttc:8.5,cost_ht:2.0},
+                  {name:"Baiser Fruité",category:"Tisanes",price_ttc:8.9,cost_ht:2.2},
+                  {name:"Éclat et Vitalité",category:"Infusions",price_ttc:7.9,cost_ht:2.0},
+                  {name:"Tisanière Verre",category:"Accessoires",price_ttc:24.9,cost_ht:6.5},
+                  {name:"Fouet Matcha",category:"Accessoires",price_ttc:15.9,cost_ht:3.5},
+                  {name:"Matcha Cérémonial Hisui 30g",category:"Matcha",price_ttc:19.0,cost_ht:13.0}];
   const prod_sales = products.map(p=>{
     const qty = Math.floor(60+Math.random()*390);
-    const tva = p.category!=="accessoire"?0.055:0.20;
+    const tva = p.category==="Accessoires"?0.20:0.055;
     const ca = +(qty*p.price_ttc).toFixed(2);
     const ht = +(ca/(1+tva)).toFixed(2);
     const cost = +(qty*p.cost_ht).toFixed(2);
     const marge = +(ht - cost).toFixed(2);
-    return {sku:p.sku, produit:p.name, category:p.category, ventes:qty, ca_ttc:ca, ca_ht:ht, cout_ht:cost, marge_ht:marge};
+    return {produit:p.name, collection:p.category, ventes:qty, ca_ttc:ca, ca_ht:ht, cout_ht:cost, marge_ht:marge, tva:tva};
   });
-  const competitors=[{date:"2025-08-20", competitor:"Kusmi Tea", type:"Nouveau produit", title:"Infusion Détox Citron-Gingembre", price:13.9, category:"infusion", diff:"Bio + pack premium", source:"#"},
-                     {date:"2025-08-18", competitor:"Palais des Thés", type:"Promo", title:"-20% sur thés verts", price:null, category:"thé vert", diff:"Promo saisonnière", source:"#"},
-                     {date:"2025-08-12", competitor:"Panda Tea", type:"Collab", title:"Coffret Matcha x Créateur", price:24.9, category:"matcha", diff:"Collaboration influenceur", source:"#"}];
-  return {daily, products:prod_sales, competitors};
+  const competitors=[{date:"2025-08-20", competitor:"Kusmi Tea", type:"Nouveau produit", title:"Infusion Détox Citron-Gingembre", price:13.9, category:"Infusions", diff:"Bio + pack premium", source:"#"},
+                     {date:"2025-08-18", competitor:"Palais des Thés", type:"Promo", title:"-20% sur thés verts", price:null, category:"Thé Vert", diff:"Promo saisonnière", source:"#"},
+                     {date:"2025-08-12", competitor:"Panda Tea", type:"Collab", title:"Coffret Matcha x Créateur", price:24.9, category:"Matcha", diff:"Collaboration influenceur", source:"#"}];
+  const bankTx = Array.from({length:40},(_,i)=>{
+    const d=new Date(+start+Math.random()*(end-start)); const amt=(Math.random()<0.6?1:-1)*(20+Math.random()*500);
+    return {date:d.toISOString().slice(0,10), lib:(amt>0?'Paiement Shopify':'Frais/Appro'), montant:+amt.toFixed(2)};
+  }).sort((a,b)=>a.date<b.date?-1:1);
+  return {daily, products:prod_sales, competitors, bankTx};
 })();
 
-/* ---------- Navigation ---------- */
+/* ====== Router ====== */
 document.querySelectorAll('.nav-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('visible'));
     document.getElementById(btn.dataset.target).classList.add('visible');
-    redrawAllCanvases(); // au changement d’onglet, on recalcule les tailles
+    redrawAll(); renderAll(); // recalcul taille + rendus
   });
 });
 
-/* ---------- Période : année civile 01/01 → 31/12 ---------- */
+/* ====== Périodes (début de mois = 1er) ====== */
 let CURRENT={from:null,to:null};
+function firstDay(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
 function setQuickRange(val){
-  const today=new Date();
-  let from, to;
+  const today=new Date(); let from, to;
   if(val==='last7'){ to=today; from=new Date(today.getFullYear(), today.getMonth(), today.getDate()-6); }
-  else if(val==='mtd'){ to=today; from=new Date(today.getFullYear(), today.getMonth(), 1); }
+  else if(val==='mtd'){ to=today; from=firstDay(today); }
   else if(val==='qtd'){ to=today; const qStart=Math.floor(today.getMonth()/3)*3; from=new Date(today.getFullYear(), qStart, 1); }
-  else if(val==='ytd'){ // année civile (01/01 → 31/12)
-    from = new Date(today.getFullYear(), 0, 1);
-    to   = new Date(today.getFullYear(), 11, 31);
-  }
+  else if(val==='ytd'){ from=new Date(today.getFullYear(),0,1); to=new Date(today.getFullYear(),11,31); }
   else if(val==='all'){ from=new Date('2025-01-01'); to=today; }
   else { from=new Date('2025-01-01'); to=today; }
   byId('from').value = from.toISOString().slice(0,10);
@@ -316,7 +376,7 @@ function setQuickRange(val){
 byId('quickRange').addEventListener('change', e=> setQuickRange(e.target.value));
 byId('applyRange').addEventListener('click', ()=>{ CURRENT.from=new Date(byId('from').value); CURRENT.to=new Date(byId('to').value); renderAll(); });
 
-/* ---------- Helpers table ---------- */
+/* ====== Tabel & Charts helpers (graduations + couleurs) ====== */
 function renderTable(table, headers, rows){
   table.innerHTML=''; const thead=document.createElement('thead'); const trh=document.createElement('tr');
   headers.forEach(h=>{const th=document.createElement('th'); th.textContent=h; trh.appendChild(th);}); thead.appendChild(trh);
@@ -324,181 +384,190 @@ function renderTable(table, headers, rows){
   rows.forEach(r=>{const tr=document.createElement('tr'); headers.forEach(h=>{const td=document.createElement('td'); td.textContent=r[h]; tr.appendChild(td);}); tbody.appendChild(tr);});
   table.appendChild(thead); table.appendChild(tbody);
 }
-
-/* ---------- Canvas sizing (responsive + HiDPI) ---------- */
-function fitCanvas(c){
-  const box = c.getBoundingClientRect();
-  c.width  = Math.max(300, Math.floor(box.width*DPR));
-  c.height = Math.floor((box.width*0.45)*DPR); // ratio 45% pour bien remplir
-  const ctx = c.getContext('2d'); ctx.scale(DPR, DPR);
-}
-function redrawAllCanvases(){ document.querySelectorAll('canvas.responsive').forEach(fitCanvas); }
-
-/* ---------- Charts avec graduations/labels ---------- */
-function drawLineChart(canvas, labels, values, opts={}){
+function lineChart(canvas, labels, values, color){
   fitCanvas(canvas);
-  const ctx = canvas.getContext('2d'), W = canvas.width/DPR, H = canvas.height/DPR;
-  const padL=48, padR=16, padT=16, padB=28;
-  const min = Math.min(...values), max = Math.max(...values)*1.1;
-  // grille + axes + ticks Y
-  ctx.clearRect(0,0,W,H);
-  ctx.strokeStyle='#e9edf3'; ctx.lineWidth=1;
-  const ticks = 5;
-  for(let i=0;i<=ticks;i++){
-    const y = padT + (H-padT-padB)*(i/ticks);
+  const ctx=canvas.getContext('2d'), W=canvas.width/DPR, H=canvas.height/DPR;
+  const padL=56,padR=16,padT=16,padB=30;
+  const min=Math.min(...values), max=Math.max(...values)*1.1;
+  ctx.clearRect(0,0,W,H); ctx.strokeStyle='#e9edf3';
+  const ticks=6;
+  for(let i=0;i<=ticks;i++){ const y=padT+(H-padT-padB)*(i/ticks);
     ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
-    const val = Math.round(max - (max-min)*(i/ticks));
+    const val=Math.round(max-(max-min)*(i/ticks));
     ctx.fillStyle='#6b778a'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.font='12px system-ui';
     ctx.fillText(val.toLocaleString('fr-FR'), padL-6, y);
   }
-  // abscisses (quelques labels)
-  const xCount = Math.min(8, labels.length);
-  for(let i=0;i<=xCount;i++){
-    const xi = Math.round((labels.length-1)*(i/xCount));
-    const x = padL + (W-padL-padR)*(xi/(labels.length-1));
+  const xCount=Math.min(8,labels.length-1);
+  for(let i=0;i<=xCount;i++){ const xi=Math.round((labels.length-1)*(i/xCount));
+    const x=padL+(W-padL-padR)*(xi/(labels.length-1));
     ctx.fillStyle='#6b778a'; ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui';
     ctx.fillText(labels[xi], x, H-padB+6);
   }
-  // courbe
-  ctx.strokeStyle = opts.color || '#1f5fbf'; ctx.lineWidth=2; ctx.beginPath();
-  values.forEach((v,i)=>{
-    const x = padL + (W-padL-padR)*(i/(values.length-1));
-    const y = padT + (H-padT-padB) * (1 - (v-min)/(max-min));
+  ctx.strokeStyle=color; ctx.lineWidth=2; ctx.beginPath();
+  values.forEach((v,i)=>{ const x=padL+(W-padL-padR)*(i/(values.length-1));
+    const y=padT+(H-padT-padB)*(1-(v-min)/(max-min));
     if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  });
-  ctx.stroke();
+  }); ctx.stroke();
 }
-function drawBarChart(canvas, labels, values, opts={}){
+function barChart(canvas, labels, values, color){
   fitCanvas(canvas);
-  const ctx = canvas.getContext('2d'), W = canvas.width/DPR, H = canvas.height/DPR;
-  const padL=48, padR=16, padT=16, padB=28;
-  const max = Math.max(...values)*1.15; const n=values.length;
-  ctx.clearRect(0,0,W,H);
-  ctx.strokeStyle='#e9edf3'; for(let i=0;i<=5;i++){ let y=padT+(H-padT-padB)*i/5; ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
-    const val = Math.round(max*(1 - i/5));
-    ctx.fillStyle='#6b778a'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.font='12px system-ui';
-    ctx.fillText(val.toLocaleString('fr-FR'), padL-6, y);
+  const ctx=canvas.getContext('2d'), W=canvas.width/DPR, H=canvas.height/DPR;
+  const padL=56,padR=16,padT=16,padB=30, max=Math.max(...values)*1.15, n=values.length;
+  ctx.clearRect(0,0,W,H); ctx.strokeStyle='#e9edf3';
+  for(let i=0;i<=5;i++){ const y=padT+(H-padT-padB)*i/5; ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+    const val=Math.round(max*(1-i/5)); ctx.fillStyle='#6b778a'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.font='12px system-ui'; ctx.fillText(val.toLocaleString('fr-FR'), padL-6, y);
   }
-  const bw=(W-padL-padR)/n*0.68, gap=(W-padL-padR)/n*0.32; ctx.fillStyle=opts.color||'#1f5fbf';
-  values.forEach((v,i)=>{
-    const x = padL + i*(bw+gap);
-    const h = (v/max)*(H-padT-padB);
-    ctx.fillRect(x, H-padB-h, bw, h);
-    // labels X clairsemés
-    ctx.fillStyle='#6b778a'; ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui';
-    ctx.fillText(labels[i], x+bw/2, H-padB+6);
-    ctx.fillStyle=opts.color||'#1f5fbf';
+  const bw=(W-padL-padR)/n*0.68, gap=(W-padL-padR)/n*0.32; ctx.fillStyle=color;
+  values.forEach((v,i)=>{ const x=padL+i*(bw+gap), h=(v/max)*(H-padT-padB); ctx.fillRect(x, H-padB-h, bw, h);
+    ctx.fillStyle='#6b778a'; ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui'; ctx.fillText(labels[i], x+bw/2, H-padB+6);
+    ctx.fillStyle=color;
   });
 }
-function drawPie(canvas, values, colors){
+function pieChart(canvas, values, colors){
   fitCanvas(canvas);
-  const ctx = canvas.getContext('2d'), W = canvas.width/DPR, H = canvas.height/DPR, r=Math.min(W,H)/2-10;
+  const ctx=canvas.getContext('2d'), W=canvas.width/DPR, H=canvas.height/DPR, r=Math.min(W,H)/2-10;
   ctx.clearRect(0,0,W,H);
-  let total = values.reduce((a,b)=>a+b,0), ang=-Math.PI/2;
-  values.forEach((v,i)=>{
-    const a = (v/total)*Math.PI*2;
-    ctx.beginPath(); ctx.moveTo(W/2,H/2); ctx.arc(W/2,H/2,r,ang,ang+a); ctx.closePath();
-    ctx.fillStyle=colors[i%colors.length]; ctx.fill(); ang += a;
-  });
+  let total=values.reduce((a,b)=>a+b,0), ang=-Math.PI/2;
+  values.forEach((v,i)=>{ const a=(v/total)*Math.PI*2; ctx.beginPath(); ctx.moveTo(W/2,H/2); ctx.arc(W/2,H/2,r,ang,ang+a); ctx.closePath(); ctx.fillStyle=colors[i%colors.length]; ctx.fill(); ang+=a; });
 }
 
-/* ---------- KPI & Calculs ---------- */
-function withinPeriod(d){ const when=new Date(d); return (!CURRENT.from||when>=CURRENT.from)&&(!CURRENT.to||when<=CURRENT.to); }
+/* ====== Calculs KPI ====== */
+function withinPeriod(d){ const w=new Date(d); return (!CURRENT.from||w>=CURRENT.from)&&(!CURRENT.to||w<=CURRENT.to); }
 function computeKPIs(){
   const days=DATA.daily.filter(x=>withinPeriod(x.date));
   const cattt=days.reduce((s,x)=>s+x.total_ttc,0), taxes=days.reduce((s,x)=>s+x.taxes,0), caht=cattt-taxes;
   const orders=days.reduce((s,x)=>s+x.orders,0);
   const fixed=3800, months=Math.max(1, ((CURRENT.to-CURRENT.from)/(1000*60*60*24*30)));
   const fixedProrata=fixed*months, variable=cattt*0.18, cogs=caht*0.42, marge=caht-cogs, result=caht-cogs-fixedProrata-variable;
-  return {days,cattt,caht,taxes,orders,marge,result,fixedProrata,variable,cogs};
+
+  /* Split TVA 5,5% / 20% (estimation à partir des ventes par collection) */
+  const caByRate = DATA.products.reduce((acc,p)=>{ const rate = p.collection==="Accessoires" ? 't20' : 't55'; acc[rate]=(acc[rate]||0)+p.ca_ttc; return acc; },{t55:0,t20:0});
+  const share55 = (caByRate.t55)/(caByRate.t55+caByRate.t20||1), share20=1-share55;
+  const tva55 = taxes*share55, tva20 = taxes*share20;
+
+  return {days, cattt, caht, taxes, tva55, tva20, orders, marge, result, fixedProrata, variable, cogs};
 }
 
-/* ---------- Renderers ---------- */
+/* ====== Renderers ====== */
 function renderDashboard(k){
   byId('kpi-cattt').textContent=fmtEUR(k.cattt);
   byId('kpi-caht').textContent=fmtEUR(k.caht);
   byId('kpi-marge').textContent=fmtEUR(k.marge);
   byId('kpi-tva').textContent=fmtEUR(k.taxes);
+  byId('kpi-tva-detail').textContent=`5,5%: ${fmtEUR(k.tva55)} • 20%: ${fmtEUR(k.tva20)}`;
+
   const box=byId('kpi-result-box'), v=byId('kpi-result');
-  if(k.result>=0){ box.classList.add('success'); box.classList.remove('danger'); v.textContent='+'+fmtEUR(k.result); }
-  else{ box.classList.add('danger'); box.classList.remove('success'); v.textContent='−'+fmtEUR(Math.abs(k.result)); }
+  if(k.result>=0){ box.classList.add('success'); box.classList.remove('danger'); v.textContent='+'+fmtEUR(k.result);}
+  else{ box.classList.add('danger'); box.classList.remove('success'); v.textContent='−'+fmtEUR(Math.abs(k.result));}
+
   const labels=k.days.map(x=>x.date.slice(5)), values=k.days.map(x=>x.total_ttc);
-  drawLineChart(byId('dashLine'), labels, values, {color:'#1f5fbf'});
+  lineChart(byId('dashLine'), labels, values, '#1f5fbf');
   const avg=values.reduce((a,b)=>a+b,0)/Math.max(1,values.length);
   const proj=Array.from({length:30},(_,i)=>avg*(1+i*0.02));
-  drawLineChart(byId('dashProj'), Array.from({length:30},(_,i)=>i+1), proj, {color:'#0f8a5f'});
-  const expVals=[k.cogs,k.fixedProrata,k.variable]; const expColors=['#1f5fbf','#d06a4e','#9ec5ff']; const expNames=['COGS','Fixes','Variables'];
-  drawPie(byId('dashPie'), expVals, expColors);
-  // Légende dépenses avec %
-  const totalExp = expVals.reduce((a,b)=>a+b,0);
-  byId('legend-expenses').innerHTML = expVals.map((v,i)=>{
-    const pct = totalExp? Math.round(v*100/totalExp):0;
-    return `<span class="item"><span class="dot" style="background:${expColors[i]}"></span>${expNames[i]} — ${pct}%</span>`;
-  }).join('');
-  // Répartition CA par canal + légende %
-  const chNames=['Site','Revendeurs','Salons','B2B'];
-  const chVals=[k.cattt*0.5,k.cattt*0.22,k.cattt*0.16,k.cattt*0.12];
-  drawBarChart(byId('dashBar'), chNames, chVals, {color:'#d06a4e'});
-  const totalCh = chVals.reduce((a,b)=>a+b,0);
-  byId('legend-channels').innerHTML = chVals.map((v,i)=>{
-    const pct = totalCh? Math.round(v*100/totalCh):0;
-    return `<span class="item"><span class="dot" style="background:#d06a4e"></span>${chNames[i]} — ${pct}%</span>`;
-  }).join('');
+  lineChart(byId('dashProj'), Array.from({length:30},(_,i)=>i+1), proj, '#0f8a5f');
+
+  const expVals=[k.cogs,k.fixedProrata,k.variable], expColors=['#1f5fbf','#d06a4e','#9ec5ff'], expNames=['COGS','Fixes','Variables'];
+  pieChart(byId('dashPie'), expVals, expColors);
+  const totalExp=expVals.reduce((a,b)=>a+b,0);
+  byId('legend-expenses').innerHTML = expVals.map((v,i)=>`<span class="item"><span class="dot" style="background:${expColors[i]}"></span>${expNames[i]} — ${Math.round(v*100/totalExp)}%</span>`).join('');
+
+  /* Canaux : Site / Pro(Revendeurs+B2B) / Salons */
+  const chNames=['Site','Pro/Revendeurs','Salons'];
+  const chVals=[k.cattt*0.6, k.cattt*0.28, k.cattt*0.12];
+  barChart(byId('dashBar'), chNames, chVals, '#888'); // couleur par barre ci-dessous via légende
+  const chCols=['var(--col-site)','var(--col-pro)','var(--col-salons)'];
+  const totalCh=chVals.reduce((a,b)=>a+b,0);
+  byId('legend-channels').innerHTML = chVals.map((v,i)=>`<span class="item"><span class="dot" style="background:${getComputedStyle(document.documentElement).getPropertyValue(chCols[i])}"></span>${chNames[i]} — ${Math.round(v*100/totalCh)}%</span>`).join('');
 }
 function renderSales(k){
   byId('sales-cattt').textContent=fmtEUR(k.cattt);
   byId('sales-orders').textContent=k.orders.toLocaleString('fr-FR');
   const aov=k.orders>0?k.cattt/k.orders:0; byId('sales-aov').textContent=fmtEUR(aov);
   byId('sales-repeat').textContent=(18+(aov>40?5:0)).toFixed(1)+' %';
-  drawLineChart(byId('salesLine'), k.days.map(d=>d.date.slice(5)), k.days.map(d=>d.total_ttc), {color:'#1f5fbf'});
-  const monthly={}; k.days.forEach(d=>{const m=d.date.slice(0,7); monthly[m]=(monthly[m]||0)+d.total_ttc;});
-  drawBarChart(byId('salesBar'), Object.keys(monthly), Object.values(monthly), {color:'#d06a4e'});
-  const rows=k.days.slice(-20).reverse().map(d=>({Date:d.date, Client:'Client '+Math.ceil(Math.random()*2000), Montant:fmtEUR(d.total_ttc), Statut:(Math.random()>0.15?'Soldée':'En cours'), Canal:(['Site','Salon','B2B','Revendeur'][Math.floor(Math.random()*4)])}));
+
+  lineChart(byId('salesLine'), k.days.map(d=>d.date.slice(5)), k.days.map(d=>d.total_ttc), '#1f5fbf');
+
+  const monthly={}; k.days.forEach(d=>{ const m=d.date.slice(0,7); monthly[m]=(monthly[m]||0)+d.total_ttc; });
+  barChart(byId('salesBar'), Object.keys(monthly), Object.values(monthly), '#d06a4e');
+
+  /* CA par Collection (à partir des produits) */
+  const byCol = DATA.products.reduce((acc,p)=>{ acc[p.collection]=(acc[p.collection]||0)+p.ca_ttc; return acc; },{});
+  const cols=Object.keys(byCol), vals=cols.map(k=>byCol[k]);
+  barChart(byId('salesCollections'), cols, vals, '#0f8a5f');
+
+  const rows=k.days.slice(-20).reverse().map(d=>({Date:d.date, Client:'Client '+Math.ceil(Math.random()*2000), Montant:fmtEUR(d.total_ttc), Statut:(Math.random()>0.15?'Soldée':'En cours'), Canal:(['Site','Salon','Pro'][Math.floor(Math.random()*3)])}));
   renderTable(byId('salesTable'), ['Date','Client','Montant','Statut','Canal'], rows);
-  byId('exportCsv').onclick=()=>{const header='date,total_ttc,taxes,orders\n'; const content=k.days.map(d=>`${d.date},${d.total_ttc},${d.taxes},${d.orders}`).join('\n'); const blob=new Blob([header+content],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='journal_ventes.csv'; a.click();};
+
+  byId('exportCsv').onclick=()=>{ const header='date,total_ttc,taxes,orders\n'; const content=k.days.map(d=>`${d.date},${d.total_ttc},${d.taxes},${d.orders}`).join('\n'); const blob=new Blob([header+content],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='journal_ventes.csv'; a.click(); };
 }
 function renderProducts(){
   const items=DATA.products.slice();
-  items.forEach(it=>{it.marge_pct=it.ca_ht>0?(it.marge_ht/it.ca_ht)*100:0; it.suggestion=(it.marge_ht<0||it.marge_pct<5||it.ca_ht<500)?'À arrêter':(it.marge_pct>55&&it.ca_ht<3000)?'Booster en pack':(it.marge_pct>45&&it.ca_ht>=3000)?'Mettre en avant':'—';});
+  items.forEach(it=>{ it.marge_pct=it.ca_ht>0?(it.marge_ht/it.ca_ht)*100:0; it.suggestion=(it.marge_ht<0||it.marge_pct<5||it.ca_ht<500)?'À arrêter':(it.marge_pct>55&&it.ca_ht<3000)?'Booster en pack':(it.marge_pct>45&&it.ca_ht>=3000)?'Mettre en avant':'—'; });
   const qty=items.reduce((s,x)=>s+x.ventes,0), ca=items.reduce((s,x)=>s+x.ca_ttc,0), margin=items.reduce((s,x)=>s+x.marge_ht,0), roi=(margin/(items.reduce((s,x)=>s+x.ca_ht,0)||1))*100;
   byId('prod-qty').textContent=qty.toLocaleString('fr-FR'); byId('prod-ca').textContent=fmtEUR(ca); byId('prod-margin').textContent=fmtEUR(margin); byId('prod-roi').textContent=roi.toFixed(1)+' %';
-  const headers=['Produit','Ventes','CA TTC','Coût HT','Marge HT','Rentabilité','Suggestion'];
-  const rows=items.map(x=>({'Produit':x.produit,'Ventes':x.ventes.toLocaleString('fr-FR'),'CA TTC':fmtEUR(x.ca_ttc),'Coût HT':fmtEUR(x.cout_ht),'Marge HT':fmtEUR(x.marge_ht),'Rentabilité':x.marge_pct.toFixed(1)+' %','Suggestion':x.suggestion}));
+  const headers=['Produit','Collection','Ventes','CA TTC','Coût HT','Marge HT','Rentabilité','Suggestion'];
+  const rows=items.map(x=>({'Produit':x.produit,'Collection':x.collection,'Ventes':x.ventes.toLocaleString('fr-FR'),'CA TTC':fmtEUR(x.ca_ttc),'Coût HT':fmtEUR(x.cout_ht),'Marge HT':fmtEUR(x.marge_ht),'Rentabilité':x.marge_pct.toFixed(1)+' %','Suggestion':x.suggestion}));
   renderTable(byId('prodTable'), headers, rows);
   const top=items.slice().sort((a,b)=>b.ca_ttc-a.ca_ttc).slice(0,5), flop=items.slice().sort((a,b)=>a.marge_ht-b.marge_ht).slice(0,5);
-  byId('topList').innerHTML=top.map(x=>`<li>${x.produit} — ${fmtEUR(x.ca_ttc)}</li>`).join(''); byId('flopList').innerHTML=flop.map(x=>`<li>${x.produit} — marge ${fmtEUR(x.marge_ht)}</li>`).join('');
-  drawBarChart(byId('prodBar'), items.map(x=>x.produit.slice(0,10)), items.map(x=>x.ca_ttc), {color:'#1f5fbf'});
-  drawBarChart(byId('prodBar2'), items.map(x=>x.produit.slice(0,10)), items.map(x=>x.marge_pct), {color:'#0f8a5f'});
+  byId('topList').innerHTML=top.map(x=>`<li>${x.produit} — ${fmtEUR(x.ca_ttc)}</li>`).join('');
+  byId('flopList').innerHTML=flop.map(x=>`<li>${x.produit} — marge ${fmtEUR(x.marge_ht)}</li>`).join('');
+
+  barChart(byId('prodBar'), items.map(x=>x.produit.slice(0,12)), items.map(x=>x.ca_ttc), '#1f5fbf');
+  barChart(byId('prodBar2'), items.map(x=>x.produit.slice(0,12)), items.map(x=>x.marge_pct), '#0f8a5f');
 }
 function renderBenchmark(){
   const headers=['Date','Concurrent','Type','Produit','Prix','Catégorie','Différenciateur','Source'];
   const rows=DATA.competitors.map(c=>({'Date':c.date,'Concurrent':c.competitor,'Type':c.type,'Produit':c.title,'Prix':c.price?fmtEUR(c.price):'—','Catégorie':c.category,'Différenciateur':c.diff,'Source':c.source}));
   renderTable(byId('benchTable'), headers, rows);
-  drawBarChart(byId('benchBar'), ['Papothé','Kusmi','PDT','Panda'], [12.5,13.9,14.5,12.9], {color:'#d06a4e'});
+  barChart(byId('benchBar'), ['Papothé','Kusmi','PDT','Panda'], [12.5,13.9,14.5,12.9], '#d06a4e');
 }
 
-/* ---------- Init + Resize ---------- */
-function renderAll(){ const k=computeKPIs(); renderDashboard(k); renderSales(k); renderProducts(); renderBenchmark(); }
+/* ====== Imports ====== */
+byId('impValidate').addEventListener('click', ()=>{
+  const type = byId('impType').value;
+  const files = Array.from(byId('impFiles').files||[]);
+  const rows = files.map(f=>({Fichier:f.name, Type:type, Taille:(f.size/1024).toFixed(1)+' Ko', Statut:'À traiter'}));
+  renderTable(byId('impTable'), ['Fichier','Type','Taille','Statut'], rows);
+  alert(`${files.length} fichier(s) prêt(s) pour import (${type}). (Démo UI)`);
+});
+
+/* ====== Banque ====== */
+function renderBank(){
+  const tx = DATA.bankTx.filter(t=>withinPeriod(t.date));
+  const balance = tx.reduce((s,t)=>s+t.montant, 2500); // solde de départ démo
+  const inflow  = tx.filter(t=>t.montant>0).reduce((s,t)=>s+t.montant,0);
+  const outflow = -tx.filter(t=>t.montant<0).reduce((s,t)=>s+t.montant,0);
+  byId('bank-balance').textContent=fmtEUR(balance);
+  byId('bank-in').textContent=fmtEUR(inflow);
+  byId('bank-out').textContent=fmtEUR(outflow);
+  const rows = tx.slice().reverse().map(t=>({Date:t.date, Libellé:t.lib, Montant:(t.montant>0?'+':'')+fmtEUR(t.montant)}));
+  renderTable(byId('bankTable'), ['Date','Libellé','Montant'], rows);
+}
+
+/* ====== Orchestration ====== */
+function renderAll(){ const k=computeKPIs(); renderDashboard(k); renderSales(k); renderProducts(); renderBenchmark(); renderBank(); }
 function init(){
-  // Année civile par défaut (01/01 -> 31/12)
-  const today=new Date(); byId('from').value=(new Date(today.getFullYear(),0,1)).toISOString().slice(0,10);
+  const today=new Date();
+  byId('from').value=(new Date(today.getFullYear(),0,1)).toISOString().slice(0,10);
   byId('to').value=(new Date(today.getFullYear(),11,31)).toISOString().slice(0,10);
   CURRENT.from=new Date(byId('from').value); CURRENT.to=new Date(byId('to').value);
-  renderAll();
-  window.addEventListener('resize', ()=>{ redrawAllCanvases(); renderAll(); });
+  redrawAll(); renderAll();
+  window.addEventListener('resize', ()=>{ redrawAll(); renderAll(); });
 }
 init();
 
-/* ---------- Projects & Exports ---------- */
-byId('pRun').addEventListener('click', ()=>{
-  const inv=+byId('pInvest').value||0, traffic=+byId('pTraffic').value||0, conv=(+byId('pConv').value||0)/100, aov=+byId('pAOV').value||0, varRate=(+byId('pVar').value||0)/100;
-  const sales=traffic*conv, cattt=sales*aov, caht=cattt/1.055, cogs=caht*0.4, variable=cattt*varRate, result=caht-cogs-variable-inv, roi=inv? (result/inv)*100:0;
-  byId('pResults').innerHTML=`<li>CA TTC prévisionnel: <b>${fmtEUR(cattt)}</b></li>
-  <li>Résultat estimé: <b style="color:${result>=0?'#0f8a5f':'#c13515'}">${result>=0?'+':''}${fmtEUR(result)}</b></li>
-  <li>ROI: <b>${roi.toFixed(1)}%</b></li>`;
-  const pess=result*0.6, real=result, opt=result*1.4;
-  drawBarChart(byId('projChart'), ['Pessimiste','Réaliste','Optimiste'], [pess,real,opt], {color:'#1f5fbf'});
+/* ====== Navigation ====== */
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('visible'));
+    document.getElementById(btn.dataset.target).classList.add('visible');
+    redrawAll(); renderAll();
+  });
 });
+
+/* ====== Exports ====== */
 byId('exportAll').addEventListener('click', ()=>{ const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='papothe_data.json'; a.click(); });
 </script>
 </body>
