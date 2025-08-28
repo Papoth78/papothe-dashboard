@@ -1,160 +1,290 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Pilotage Papothé</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Papothé — Exercice Comptable 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#fafafa; color:#333; }
-    header { background:#6b1d1d; color:#fff; padding:1rem; text-align:center; }
-    nav { background:#eee; display:flex; justify-content:center; gap:1rem; padding:0.5rem; }
-    nav a { text-decoration:none; color:#333; font-weight:bold; }
-    section { padding:1rem; }
-    table { border-collapse: collapse; width:100%; margin-top:1rem; }
-    th,td { border:1px solid #ddd; padding:8px; }
-    th { background:#f4f4f4; }
-    canvas { max-width:100%; }
+    :root{
+      --brand:#6b1d1d; --ink:#222; --muted:#667; --bg:#fafafa; --card:#fff; --b:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--ink)}
+    header{background:var(--brand);color:#fff;padding:12px 16px}
+    header h1{margin:0;font-size:20px}
+    nav{background:#fff;border-bottom:1px solid var(--b);display:flex;gap:8px;flex-wrap:wrap;padding:8px 10px;position:sticky;top:0;z-index:10}
+    nav button{border:1px solid var(--b);background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+    nav button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+    .wrap{max-width:1200px;margin:14px auto;padding:0 12px}
+    .card{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:14px;margin-bottom:14px}
+    h2{margin:8px 0 12px}
+    h3{margin:0 0 10px}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:10px}
+    .kpi{background:#fff;border:1px solid var(--b);border-radius:12px;padding:12px}
+    .kpi b{display:block;font-size:14px;color:var(--muted);margin-bottom:6px}
+    .kpi span{font-weight:700;font-size:18px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{border-bottom:1px solid var(--b);padding:8px;text-align:left}
+    thead th{background:#f7f7f7;color:var(--muted)}
+    .note{color:var(--muted);font-size:13px}
+    .hidden{display:none}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.kpis{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <header>
-    <h1>📊 Cockpit Papothé 2025</h1>
-  </header>
+  <header><h1>📊 Papothé — Exercice Comptable 2025</h1></header>
+
   <nav>
-    <a href="#" onclick="showTab('dashboard')">Tableau de bord</a>
-    <a href="#" onclick="showTab('ventes')">Ventes</a>
-    <a href="#" onclick="showTab('produits')">Produits</a>
-    <a href="#" onclick="showTab('factures')">Factures</a>
-    <a href="#" onclick="showTab('banque')">Banque</a>
+    <button class="tab active" data-id="exercice">Exercice comptable</button>
+    <button class="tab" data-id="ventes">Ventes</button>
+    <button class="tab" data-id="achats">Achats</button>
+    <button class="tab" data-id="produits">Produits</button>
+    <button class="tab" data-id="banque">Banque</button>
   </nav>
 
-  <section id="dashboard">
-    <h2>Résumé</h2>
-    <div id="kpi"></div>
-    <canvas id="caChart"></canvas>
-  </section>
+  <div class="wrap">
 
-  <section id="ventes" style="display:none;">
-    <h2>Journal des ventes</h2>
-    <table id="salesTable"></table>
-  </section>
+    <!-- EXERCICE -->
+    <section id="exercice">
+      <div class="card">
+        <h2>Exercice 2025 — 01/01/2025 → 31/12/2025</h2>
+        <div class="kpis">
+          <div class="kpi"><b>CA TTC (Shopify)</b><span id="ex_ca_ttc">—</span></div>
+          <div class="kpi"><b>CA HT (Shopify)</b><span id="ex_ca_ht">—</span></div>
+          <div class="kpi"><b>TVA collectée</b><span id="ex_tva_col">—</span><div class="note" id="ex_tva_col_det">—</div></div>
+          <div class="kpi"><b>TVA déductible</b><span id="ex_tva_ded">—</span><div class="note" id="ex_tva_ded_det">—</div></div>
+        </div>
+      </div>
 
-  <section id="produits" style="display:none;">
-    <h2>Produits</h2>
-    <table id="productsTable"></table>
-  </section>
+      <div class="grid2">
+        <div class="card">
+          <h3>VENTES (Shopify) — mois par mois</h3>
+          <table id="ex_sells_month">
+            <thead><tr><th>Mois</th><th>CA TTC</th><th>CA HT</th><th>TVA</th><th>Commandes</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>ACHATS — mois par mois</h3>
+          <table id="ex_buy_month">
+            <thead><tr><th>Mois</th><th>HT</th><th>TVA 5,5%</th><th>TVA 20%</th><th>TVA Totale</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
 
-  <section id="factures" style="display:none;">
-    <h2>Factures</h2>
-    <table id="invoicesTable"></table>
-  </section>
+      <div class="card">
+        <h3>TVA — synthèse mensuelle</h3>
+        <table id="ex_vat_month">
+          <thead><tr><th>Mois</th><th>Collectée</th><th>Déductible</th><th>TVA nette</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="note">Collectée = ventes Shopify (pour démarrer). Déductible = lignes de factures (invoice_lines). On ajoutera Zettle & factures ventes ensuite.</p>
+      </div>
+    </section>
 
-  <section id="banque" style="display:none;">
-    <h2>Banque</h2>
-    <table id="bankTable"></table>
-  </section>
+    <!-- VENTES -->
+    <section id="ventes" class="hidden">
+      <div class="card">
+        <h2>Ventes — global & mensuel (Shopify pour démarrer)</h2>
+        <div class="kpis">
+          <div class="kpi"><b>CA TTC (Shopify)</b><span id="v_ca_ttc">—</span></div>
+          <div class="kpi"><b>Commandes</b><span id="v_orders">—</span></div>
+          <div class="kpi"><b>Panier moyen</b><span id="v_aov">—</span></div>
+          <div class="kpi"><b>TVA collectée</b><span id="v_tva">—</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Journal des ventes (Shopify)</h3>
+        <table id="v_journal">
+          <thead><tr><th>Date</th><th>Client</th><th>TTC</th><th>HT</th><th>TVA</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Ventes mensuelles</h3>
+        <table id="v_month">
+          <thead><tr><th>Mois</th><th>CA TTC</th><th>CA HT</th><th>TVA</th><th>Commandes</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ACHATS -->
+    <section id="achats" class="hidden">
+      <div class="card">
+        <h2>Achats — global & mensuel</h2>
+        <div class="kpis">
+          <div class="kpi"><b>Total HT</b><span id="a_ht">—</span></div>
+          <div class="kpi"><b>TVA 5,5%</b><span id="a_t55">—</span></div>
+          <div class="kpi"><b>TVA 20%</b><span id="a_t20">—</span></div>
+          <div class="kpi"><b>TVA totale</b><span id="a_tva">—</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Achats mensuels</h3>
+        <table id="a_month">
+          <thead><tr><th>Mois</th><th>HT</th><th>TVA 5,5%</th><th>TVA 20%</th><th>TVA totale</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PRODUITS (placeholder pour étape suivante) -->
+    <section id="produits" class="hidden">
+      <div class="card"><h2>Produits — à compléter (global & mensuel)</h2></div>
+    </section>
+
+    <!-- BANQUE (placeholder pour étape suivante) -->
+    <section id="banque" class="hidden">
+      <div class="card"><h2>Banque — à compléter (global & mensuel)</h2></div>
+    </section>
+
+  </div>
+
   <script>
-  // ---- CONFIG SUPABASE ----
+  // === CONFIG SUPABASE ===
   const SUPABASE_URL  = "https://hddozxsqysxdrqgqitny.supabase.co";
   const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkZG96eHNxeXN4ZHJxZ3FpdG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzOTI0NDYsImV4cCI6MjA3MTk2ODQ0Nn0.ztFE5xIdsRppB7hWU1fnXdtaMomm5ny9DXxNVIq7mPU";
-
-  async function sp(path, params="") {
+  async function sp(path, params=""){
     const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}${params}`, {
-      headers: {
-        apikey: SUPABASE_ANON,
-        Authorization: `Bearer ${SUPABASE_ANON}`
-      }
+      headers:{ apikey: SUPABASE_ANON, Authorization:`Bearer ${SUPABASE_ANON}` }
     });
+    if(!r.ok){ console.error('Supabase', r.status, path, params); }
     return r.json();
   }
 
-  let DATA = { daily:[], products:[], journal:[], invoices:[], bankTx:[] };
+  // === Aides ===
+  const fmtE = n => (Number(n)||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+  const ym = d => (d||'').slice(0,7); // YYYY-MM
+  function sum(arr, fn){ return arr.reduce((s,x)=>s+(+fn(x)||0),0); }
+  function pushRow(tbody, cells){ const tr=document.createElement('tr'); cells.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td)}); tbody.appendChild(tr); }
 
-  async function loadFromSupabase(){
-    // Ventes
-    const sales = await sp("sales","?select=date,customer_ref,amount_ttc,amount_ht,tva_amount,tva_rate,source,channel_id,product_id,qty");
-    DATA.journal = sales;
-    // Produits
-    const prods = await sp("products","?select=name,price_ttc,cost_ht,tva_rate");
-    DATA.products = prods;
-    // Factures
-    const invs = await sp("invoices","?select=supplier,invoice_number,date,total_ht,total_tva,total_ttc");
-    DATA.invoices = invs;
-    // Banque
-    const bank = await sp("bank_tx","?select=date,description,amount,account");
-    DATA.bankTx = bank;
+  // === PÉRIMÈTRE EXERCICE ===
+  const EX_FROM = "2025-01-01";
+  const EX_TO   = "2025-12-31";
 
-    renderAll();
-  }
+  async function loadExercice(){
+    // 1) VENTES Shopify uniquement (on ajoutera Zettle & factures plus tard)
+    const sells = await sp("sales",
+      `?date=gte.${EX_FROM}&date=lte.${EX_TO}&source=eq.SHOPIFY&select=date,customer_ref,amount_ttc,amount_ht,tva_amount,tva_rate`
+    );
 
-  function renderAll(){
-    renderKPIs();
-    renderSales();
-    renderProducts();
-    renderInvoices();
-    renderBank();
-    renderCAChart();
-  }
+    // 2) LIGNES DE FACTURES (achats) jointes aux en-têtes pour la période
+    const lines = await sp("invoice_lines",
+      `?select=invoice_id,description,qty,unit_ht,tva_rate,line_ht,line_tva,line_ttc,category,invoices(date,supplier)&invoices.date=gte.${EX_FROM}&invoices.date=lte.${EX_TO}`
+    );
 
-  function renderKPIs(){
-    let totalCA = DATA.journal.reduce((a,b)=>a+Number(b.amount_ttc||0),0);
-    document.getElementById("kpi").innerHTML = `<b>CA TTC :</b> ${totalCA.toFixed(2)} €`;
-  }
+    // ===== Global EXERCICE =====
+    const ex_ca_ttc = sum(sells, s=>s.amount_ttc);
+    const ex_ca_ht  = sum(sells, s=>s.amount_ht);
+    const ex_tvaCol = sum(sells, s=>s.tva_amount);
+    const ex_tvaCol55 = sum(sells, s=> (Number(s.tva_rate)===0.055 ? s.tva_amount : 0));
+    const ex_tvaCol20 = sum(sells, s=> (Number(s.tva_rate)===0.20  ? s.tva_amount : 0));
 
-  function renderSales(){
-    let html = "<tr><th>Date</th><th>Client</th><th>TTC</th><th>HT</th><th>TVA</th></tr>";
-    DATA.journal.forEach(s=>{
-      html += `<tr><td>${s.date}</td><td>${s.customer_ref||""}</td><td>${s.amount_ttc}</td><td>${s.amount_ht}</td><td>${s.tva_amount}</td></tr>`;
+    const ex_tvaDed55 = sum(lines, l=> (Number(l.tva_rate)===0.055 ? l.line_tva : 0));
+    const ex_tvaDed20 = sum(lines, l=> (Number(l.tva_rate)===0.20  ? l.line_tva : 0));
+    const ex_tvaDed = ex_tvaDed55 + ex_tvaDed20;
+
+    document.getElementById('ex_ca_ttc').textContent = fmtE(ex_ca_ttc);
+    document.getElementById('ex_ca_ht').textContent  = fmtE(ex_ca_ht);
+    document.getElementById('ex_tva_col').textContent= fmtE(ex_tvaCol);
+    document.getElementById('ex_tva_col_det').textContent = `5,5%: ${fmtE(ex_tvaCol55)} • 20%: ${fmtE(ex_tvaCol20)}`;
+    document.getElementById('ex_tva_ded').textContent= fmtE(ex_tvaDed);
+    document.getElementById('ex_tva_ded_det').textContent = `5,5%: ${fmtE(ex_tvaDed55)} • 20%: ${fmtE(ex_tvaDed20)}`;
+
+    // ===== VENTES mensuelles (Shopify) =====
+    const sellsByM = {};
+    sells.forEach(s=>{
+      const m = ym(s.date);
+      sellsByM[m] = sellsByM[m] || {ttc:0,ht:0,tva:0,orders:0};
+      sellsByM[m].ttc += Number(s.amount_ttc)||0;
+      sellsByM[m].ht  += Number(s.amount_ht)||0;
+      sellsByM[m].tva += Number(s.tva_amount)||0;
+      sellsByM[m].orders += 1; // 1 ligne ≈ 1 commande (on affinera si besoin)
     });
-    document.getElementById("salesTable").innerHTML = html;
-  }
-
-  function renderProducts(){
-    let html = "<tr><th>Produit</th><th>Prix TTC</th><th>Coût HT</th><th>TVA</th></tr>";
-    DATA.products.forEach(p=>{
-      html += `<tr><td>${p.name}</td><td>${p.price_ttc}</td><td>${p.cost_ht}</td><td>${p.tva_rate}</td></tr>`;
+    const tbSm = document.querySelector('#ex_sells_month tbody'); tbSm.innerHTML='';
+    Object.keys(sellsByM).sort().forEach(m=>{
+      const v=sellsByM[m]; pushRow(tbSm,[m,fmtE(v.ttc),fmtE(v.ht),fmtE(v.tva),v.orders.toLocaleString('fr-FR')]);
     });
-    document.getElementById("productsTable").innerHTML = html;
-  }
 
-  function renderInvoices(){
-    let html = "<tr><th>Fournisseur</th><th>N°</th><th>Date</th><th>HT</th><th>TVA</th><th>TTC</th></tr>";
-    DATA.invoices.forEach(f=>{
-      html += `<tr><td>${f.supplier}</td><td>${f.invoice_number}</td><td>${f.date}</td><td>${f.total_ht}</td><td>${f.total_tva}</td><td>${f.total_ttc}</td></tr>`;
+    // ===== ACHATS mensuels =====
+    const buyByM = {};
+    lines.forEach(l=>{
+      const d = l.invoices?.date || EX_FROM, m=ym(d);
+      buyByM[m] = buyByM[m] || {ht:0,t55:0,t20:0};
+      buyByM[m].ht += Number(l.line_ht)||0;
+      if(Number(l.tva_rate)===0.055) buyByM[m].t55 += Number(l.line_tva)||0;
+      else if(Number(l.tva_rate)===0.20) buyByM[m].t20 += Number(l.line_tva)||0;
     });
-    document.getElementById("invoicesTable").innerHTML = html;
-  }
-
-  function renderBank(){
-    let html = "<tr><th>Date</th><th>Description</th><th>Montant</th><th>Compte</th></tr>";
-    DATA.bankTx.forEach(b=>{
-      html += `<tr><td>${b.date}</td><td>${b.description}</td><td>${b.amount}</td><td>${b.account}</td></tr>`;
+    const tbBm = document.querySelector('#ex_buy_month tbody'); tbBm.innerHTML='';
+    Object.keys(buyByM).sort().forEach(m=>{
+      const v=buyByM[m], tot=v.t55+v.t20;
+      pushRow(tbBm,[m,fmtE(v.ht),fmtE(v.t55),fmtE(v.t20),fmtE(tot)]);
     });
-    document.getElementById("bankTable").innerHTML = html;
-  }
 
-  function renderCAChart(){
-    const ctx = document.getElementById('caChart').getContext('2d');
-    const byDate = {};
-    DATA.journal.forEach(s=>{
-      if(!byDate[s.date]) byDate[s.date]=0;
-      byDate[s.date]+= Number(s.amount_ttc||0);
+    // ===== TVA synthèse mensuelle =====
+    const vatByM = {};
+    // collectée par mois
+    Object.keys(sellsByM).forEach(m=>{
+      vatByM[m] = vatByM[m] || {col:0,ded:0};
+      vatByM[m].col = sellsByM[m].tva;
     });
-    const labels = Object.keys(byDate).sort();
-    const data = labels.map(l=>byDate[l]);
-    new Chart(ctx,{ type:'line',
-      data:{ labels, datasets:[{label:"CA quotidien", data, borderColor:"#6b1d1d"}] }
+    // déductible par mois
+    Object.keys(buyByM).forEach(m=>{
+      vatByM[m] = vatByM[m] || {col:0,ded:0};
+      vatByM[m].ded = buyByM[m].t55 + buyByM[m].t20;
+    });
+    const tbVm = document.querySelector('#ex_vat_month tbody'); tbVm.innerHTML='';
+    Object.keys(vatByM).sort().forEach(m=>{
+      const v=vatByM[m]; pushRow(tbVm,[m,fmtE(v.col),fmtE(v.ded),fmtE(v.col - v.ded)]);
+    });
+
+    // ===== Onglet VENTES (global + journal + mensuel) =====
+    const caTTC = ex_ca_ttc, orders = sells.length, aov = orders? caTTC/orders : 0;
+    document.getElementById('v_ca_ttc').textContent = fmtE(caTTC);
+    document.getElementById('v_orders').textContent = orders.toLocaleString('fr-FR');
+    document.getElementById('v_aov').textContent   = fmtE(aov);
+    document.getElementById('v_tva').textContent   = fmtE(ex_tvaCol);
+
+    const tbJ = document.querySelector('#v_journal tbody'); tbJ.innerHTML='';
+    sells.sort((a,b)=>a.date<b.date?1:-1).slice(0,500).forEach(s=>{
+      pushRow(tbJ,[s.date, s.customer_ref||'—', fmtE(s.amount_ttc), fmtE(s.amount_ht), fmtE(s.tva_amount)]);
+    });
+
+    const tbVm2 = document.querySelector('#v_month tbody'); tbVm2.innerHTML='';
+    Object.keys(sellsByM).sort().forEach(m=>{
+      const v=sellsByM[m]; pushRow(tbVm2,[m,fmtE(v.ttc),fmtE(v.ht),fmtE(v.tva), v.orders.toLocaleString('fr-FR')]);
+    });
+
+    // ===== Onglet ACHATS (global + mensuel) =====
+    const a_ht = sum(lines, l=>l.line_ht);
+    document.getElementById('a_ht').textContent  = fmtE(a_ht);
+    document.getElementById('a_t55').textContent = fmtE(ex_tvaDed55);
+    document.getElementById('a_t20').textContent = fmtE(ex_tvaDed20);
+    document.getElementById('a_tva').textContent = fmtE(ex_tvaDed);
+
+    const tbAm = document.querySelector('#a_month tbody'); tbAm.innerHTML='';
+    Object.keys(buyByM).sort().forEach(m=>{
+      const v=buyByM[m]; pushRow(tbAm,[m,fmtE(v.ht),fmtE(v.t55),fmtE(v.t20),fmtE(v.t55+v.t20)]);
     });
   }
 
-  function showTab(id){
-    document.querySelectorAll("section").forEach(s=>s.style.display="none");
-    document.getElementById(id).style.display="block";
-  }
+  // === Tabs ===
+  document.querySelectorAll('.tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+      document.getElementById(btn.dataset.id).classList.remove('hidden');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
 
-  loadFromSupabase();
+  // === GO ===
+  loadExercice();
   </script>
 </body>
 </html>
